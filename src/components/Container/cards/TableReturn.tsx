@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { ApiModel } from '../../../Interface/Model';
 import CardList from '../../Card/Card';
 import * as S from './styled';
+import TableList from '../../Table/Table';
 
 function CardsFormat() {
-
-  
   const [data, setData] = useState<ApiModel[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
@@ -28,23 +27,14 @@ function CardsFormat() {
         console.log("data");
       });
   }, []);
+  console.log(data);
 
+  
   return(
-    <S.CardsDiv>
-
-      {error && <p>{error.message}</p>}
-      {data.map((lista) =>(
-        <CardList
-        key={lista._id}
-        _id={lista._id}
-        name={lista.name}
-        description={lista.description}
-        completed={lista.completed}
-        />
-
-      ))}
-
-    </S.CardsDiv>
+    <S.TableDiv>
+      <TableList data={data}></TableList>
+    </S.TableDiv>
+    
   )
 }
 

@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
-export const CardsDiv = styled.div`
+export const TableDiv = styled.div`
 display: flex;
-gap: 2vw;
 width: 100vw;
+height: 100vh;
 justify-content: center;
+align-items:center;
+
 `

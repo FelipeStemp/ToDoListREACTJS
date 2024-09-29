@@ -1,21 +1,27 @@
 import styled from "styled-components";
 
 export const DivCard = styled.form`
-color:black;
+color:white;
 display: flex;
-width: 200px;
-padding: 10px;
-align-items: flex-start;
+width: 60vw;
+padding: 2vw;
+align-items: left;
 flex-direction: column;
 border-radius: 10px;
-box-shadow: 1px 1px 2px #01579b;
-text-align: left;
+background-color: #464C5D;
+border: solid 1px #156AEB;
+box-shadow: 2px 2px 2px #156AEB;
 justify-content: flex-end;
+
+@media (max-width: 720px) {
+  width: 100vw;
+}
 `
 
 export const DivBtn = styled.div`
 display: flex;
 width: 100%;
 justify-content: center;
+margin: 10px 0px;
 gap: 10px;
 `

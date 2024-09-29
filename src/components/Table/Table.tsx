@@ -1,20 +1,27 @@
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
-import { ApiModel } from "../../Interface/Model"
-import * as S from './styled'
+import { Button, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { ApiModel } from "../../Interface/Model";
+import * as S from './styled';
 
 interface dataProps {
     data: ApiModel[];
 }
 
 function TableList({data}: dataProps){
+
+    const navigate = useNavigate();
+
+    const HandleEdit = (name:string) => {
+        navigate("/Editar", {state: {name}});
+    }
+
     return(
         <S.DivTable>
             <TableContainer sx={{maxWidth: "90vw", borderRadius:"3px"}}>
             <TableHead >
                 <TableRow 
                 sx={{ 
-                    backgroundColor: "#2F333F", 
-                    
+                    backgroundColor: "#2F333F",  
                 }}>
                     <TableCell sx={{color: "white", textAlign: "left"}}>Título</TableCell>
                     <TableCell sx={{color: "white", textAlign: "left"}}>Descrição</TableCell>
@@ -33,7 +40,8 @@ function TableList({data}: dataProps){
                         <TableCell 
                         sx={{ 
                             color: "white",
-                            maxWidth: "30vw",
+                            width:"10vw",
+                            maxWidth: "10vw",
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
@@ -46,7 +54,8 @@ function TableList({data}: dataProps){
                         <TableCell 
                         sx={{ 
                             color: "white",
-                            maxWidth: "60vw",
+                            width:"20vw",
+                            maxWidth: "20vw",
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
@@ -60,7 +69,17 @@ function TableList({data}: dataProps){
 
                         <TableCell>
 
-                        <Button sx={{ boxShadow: "1px 1px 1px #156AEB", color: "white", border: "solid 1px #156AEB"}} size="small" fullWidth variant='outlined'
+                        <Button 
+                        sx=
+                        {{ 
+                            boxShadow: "1px 1px 1px #156AEB", 
+                            color: "white", 
+                            border: "solid 1px #156AEB"
+                        }} 
+                        size="small" 
+                        fullWidth 
+                        variant='outlined'
+                        onClick={() => HandleEdit(lista.name)}
                         >
                             Editar
                         </Button>
@@ -68,7 +87,7 @@ function TableList({data}: dataProps){
 
                         <TableCell>
 
-                        <Button sx={{boxShadow: "1px 1px 1px #930500", color: "white", border: "solid 1px #930500"}} size="small" fullWidth variant='outlined'
+                        <Button sx={{boxShadow: "1px 1px 1px #E00000", color: "white", border: "solid 1px #E00000"}} size="small" fullWidth variant='outlined'
                         >
                             Excluir
                         </Button>

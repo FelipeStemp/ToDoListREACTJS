@@ -1,14 +1,21 @@
 
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
-import CardsFormat from './components/Container/cards/TableReturn';
+import Editar from './pages/editar/editar';
+import Home from './pages/home/home';
+
 ;
 
 function App() {
 
-  return (
-    <div className="App">
-      <CardsFormat/>
-    </div>
+  return (  
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/Home" />} />
+        <Route path='/Home' element={<Home/>}/>
+        <Route path='/Editar' element={<Editar/>}/>
+      </Routes>
+    </Router>
   );
 }
 

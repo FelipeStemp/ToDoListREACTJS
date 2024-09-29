@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ApiModel } from '../../../Interface/Model';
-import CardList from '../../Card/Card';
+import { ApiModel } from '../../Interface/Model';
+import TableList from '../../components/Table/Table';
 import * as S from './styled';
-import TableList from '../../Table/Table';
 
-function CardsFormat() {
+function Home(){
   const [data, setData] = useState<ApiModel[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
@@ -24,18 +23,18 @@ function CardsFormat() {
       })
       .catch((error)=>{
         setError(error);
-        console.log("data");
+        console.log(error);
       });
   }, []);
   console.log(data);
 
   
   return(
-    <S.TableDiv>
+    <S.HomeBody>
       <TableList data={data}></TableList>
-    </S.TableDiv>
+    </S.HomeBody>
     
   )
 }
 
-export default CardsFormat
+export default Home

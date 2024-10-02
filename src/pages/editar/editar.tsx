@@ -15,7 +15,7 @@ function Editar(){
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    fetch(`https://api-to-do-list-lu3m.onrender.com/name/${name}`, { method: 'GET',
+    fetch(`https://api-to-do-list-lu3m.onrender.com/id/${data._id}`, { method: 'GET',
       mode: 'cors',})
       .then((response)=>
       {

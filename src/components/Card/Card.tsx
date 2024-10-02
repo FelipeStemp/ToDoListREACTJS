@@ -110,7 +110,7 @@ function CardList({ _id, name, description, completed }: ApiModel) {
       {alertDelete && <Alert severity='success'> Deletado com sucesso</Alert>}
       <S.DivBtn>
         <Button variant='contained' onClick={handleSave}>SALVAR</Button>
-        <ButtonExcluir name={name} deletado={handleDeleteSuccess} />
+        <ButtonExcluir id={_id} deletado={handleDeleteSuccess} />
       </S.DivBtn>
 
 

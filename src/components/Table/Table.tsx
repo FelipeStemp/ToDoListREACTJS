@@ -98,7 +98,7 @@ function TableList({ data }: dataProps) {
 
                             <TableCell>
 
-                                <ButtonExcluir name={lista.name} deletado={handleDeleteSuccess} />
+                                <ButtonExcluir id={lista._id} deletado={handleDeleteSuccess} />
                             </TableCell>
                         </TableRow>
                     ))}

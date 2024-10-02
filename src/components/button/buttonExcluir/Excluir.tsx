@@ -33,7 +33,7 @@ function ButtonExcluir({ name, deletado }: props) {
   }
   return (
     <Button sx={{ boxShadow: "1px 1px 1px #E00000", color: "white", border: "solid 1px #E00000" }} size="small" variant='outlined'
-      onClick={() => HandleDelete(name)}>Excluir</Button>
+      onClick={() => HandleDelete(name.toLowerCase())}>Excluir</Button>
   )
 }
 

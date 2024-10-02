@@ -4,7 +4,7 @@ import { ApiModel } from '../../Interface/Model';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ButtonExcluir from '../button/buttonExcluir/Excluir';
+import ButtonContainer from '../button/ButtonCont';
 import * as S from './styled';
 
 
@@ -16,6 +16,8 @@ function CardList({ _id, name, description, completed }: ApiModel) {
   const [desc, setDesc] = useState(description);
   const [alertUpdate, setAlertUpdateOpen] = useState(false);
   const [alertDelete, setAlertDeleteOpen] = useState(false);
+
+  console.log("is aqui:", _id)
 
   const handleToggle = () => {
     setCompleto(!isComplete)
@@ -110,7 +112,7 @@ function CardList({ _id, name, description, completed }: ApiModel) {
       {alertDelete && <Alert severity='success'> Deletado com sucesso</Alert>}
       <S.DivBtn>
         <Button variant='contained' onClick={handleSave}>SALVAR</Button>
-        <ButtonExcluir id={_id} deletado={handleDeleteSuccess} />
+        <ButtonContainer id={_id} action='delete'/>
       </S.DivBtn>
 
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const DivCard = styled.form`
 color:white;
 display: flex;
-width: 60vw;
+width: 40vw;
 padding: 2vw;
 align-items: left;
 flex-direction: column;
@@ -14,7 +14,7 @@ box-shadow: 2px 2px 2px #156AEB;
 justify-content: flex-end;
 
 @media (max-width: 720px) {
-  width: 100vw;
+  width: 90vw;
 }
 `
 

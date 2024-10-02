@@ -2,7 +2,7 @@ import { Alert, Button, TableBody, TableCell, TableContainer, TableHead, TableRo
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiModel } from "../../Interface/Model";
-import ButtonExcluir from "../button/buttonExcluir/Excluir";
+import ButtonContainer from "../button/ButtonCont";
 import * as S from './styled';
 
 interface dataProps {
@@ -15,6 +15,10 @@ function TableList({ data }: dataProps) {
 
     const HandleEdit = (id: string) => {
         navigate("/Editar", { state: { id } });
+    }
+
+    const HandleCriar =() => {
+        navigate("/Editar")
     }
 
     const handleDeleteSuccess = (success: boolean) => {
@@ -37,8 +41,7 @@ function TableList({ data }: dataProps) {
                         <TableCell sx={{ color: "white", textAlign: "left" }}>Título</TableCell>
                         <TableCell sx={{ color: "white", textAlign: "left" }}>Descrição</TableCell>
                         <TableCell sx={{ color: "white", textAlign: "center" }}>Completo</TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
+                        <TableCell sx={{textAlign: "center"}}><Button onClick={HandleCriar}>Criar</Button></TableCell>
                     </TableRow>
                 </TableHead>
 
@@ -85,20 +88,20 @@ function TableList({ data }: dataProps) {
                                     {{
                                         boxShadow: "1px 1px 1px #156AEB",
                                         color: "white",
-                                        border: "solid 1px #156AEB"
+                                        border: "solid 1px #156AEB",
+                                        margin:"10px"
                                     }}
                                     size="small"
-                                    fullWidth
+                                    
                                     variant='outlined'
                                     onClick={() => HandleEdit(lista._id)}
                                 >
                                     Editar
                                 </Button>
-                            </TableCell>
 
-                            <TableCell>
+                                <ButtonContainer id_coleted={lista._id}/>
 
-                                <ButtonExcluir id={lista._id} deletado={handleDeleteSuccess} />
+                                <ButtonContainer id_coleted={lista._id} />
                             </TableCell>
                         </TableRow>
                     ))}

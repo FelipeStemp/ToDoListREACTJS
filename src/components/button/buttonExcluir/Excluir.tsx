@@ -23,7 +23,7 @@ function ButtonExcluir({ name, deletado }: props) {
       }
       deletado(true)
       setTimeout(() => {
-        navigate("/Home")
+        navigate("/")
       }, 1500)
       return response.json()
     }).catch(error => {

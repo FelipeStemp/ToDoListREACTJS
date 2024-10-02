@@ -1,5 +1,5 @@
 
-import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import Editar from './pages/editar/editar';
 import Home from './pages/home/home';
@@ -8,12 +8,11 @@ import Home from './pages/home/home';
 
 function App() {
 
-  return (  
+  return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/Home" />} />
-        <Route path='/Home' element={<Home/>}/>
-        <Route path='/Editar' element={<Editar/>}/>
+        <Route path='/' element={<Home />} />
+        <Route path='/Editar' element={<Editar />} />
       </Routes>
     </Router>
   );

@@ -57,7 +57,7 @@ function CardList({ _id, name, description, completed }: ApiModel) {
 
       setAlertUpdateOpen(true);
       setTimeout(() => {
-        navigate("/Home")
+        navigate("/")
       }, 2000)
     }).catch(error => {
       console.log('Error: ', error)

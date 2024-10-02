@@ -3,16 +3,17 @@ import { ApiModel } from '../../Interface/Model';
 import TableList from '../../components/Table/Table';
 import * as S from './styled';
 
-function Home(){
+function Home() {
   const [data, setData] = useState<ApiModel[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    fetch('https://api-to-do-list-lu3m.onrender.com/', { method: 'GET',
-      mode: 'cors',})
-      .then((response)=>
-      {
-        if(!response.ok){
+    fetch('https://api-to-do-list-lu3m.onrender.com/', {
+      method: 'GET',
+      mode: 'cors',
+    })
+      .then((response) => {
+        if (!response.ok) {
           throw new Error('Erro ao buscar atividades');
         }
         return response.json();
@@ -21,19 +22,19 @@ function Home(){
         setData(data);
         console.log(data);
       })
-      .catch((error)=>{
+      .catch((error) => {
         setError(error);
         console.log(error);
       });
   }, []);
   console.log(data);
 
-  
-  return(
+
+  return (
     <S.HomeBody>
       <TableList data={data}></TableList>
     </S.HomeBody>
-    
+
   )
 }
 

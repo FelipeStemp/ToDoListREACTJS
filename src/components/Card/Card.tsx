@@ -36,7 +36,7 @@ function CardList({ _id, name, description, completed }: ApiModel) {
   }
 
   const handleSave = () => {
-    fetch(`https://api-to-do-list-lu3m.onrender.com/updateByName/${name}`,
+    fetch(`https://api-to-do-list-lu3m.onrender.com/updateByID/${_id}`,
       {
         method: 'PUT',
         headers: {

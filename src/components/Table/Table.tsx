@@ -13,8 +13,8 @@ function TableList({ data }: dataProps) {
     const navigate = useNavigate();
     const [alertOpen, setAlertOpen] = useState(false);
 
-    const HandleEdit = (name: string) => {
-        navigate("/Editar", { state: { name } });
+    const HandleEdit = (id: string) => {
+        navigate("/Editar", { state: { id } });
     }
 
     const handleDeleteSuccess = (success: boolean) => {
@@ -90,7 +90,7 @@ function TableList({ data }: dataProps) {
                                     size="small"
                                     fullWidth
                                     variant='outlined'
-                                    onClick={() => HandleEdit(lista.name)}
+                                    onClick={() => HandleEdit(lista._id)}
                                 >
                                     Editar
                                 </Button>

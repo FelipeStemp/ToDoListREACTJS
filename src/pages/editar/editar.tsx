@@ -7,15 +7,13 @@ import * as S from './styled';
 function Editar(){
 
   const location = useLocation();
-  const {name} = location.state;
-
-  console.log({name})
+  const {id} = location.state;
 
   const [data, setData] = useState<ApiModel | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    fetch(`https://api-to-do-list-lu3m.onrender.com/id/${data._id}`, { method: 'GET',
+    fetch(`https://api-to-do-list-lu3m.onrender.com/id/${id}`, { method: 'GET',
       mode: 'cors',})
       .then((response)=>
       {

@@ -1,105 +1,113 @@
-import { Button, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Alert, Button, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiModel } from "../../Interface/Model";
+import ButtonExcluir from "../button/buttonExcluir/Excluir";
 import * as S from './styled';
 
 interface dataProps {
     data: ApiModel[];
 }
 
-function TableList({data}: dataProps){
-
+function TableList({ data }: dataProps) {
     const navigate = useNavigate();
+    const [alertOpen, setAlertOpen] = useState(false);
 
-    const HandleEdit = (name:string) => {
-        navigate("/Editar", {state: {name}});
+    const HandleEdit = (name: string) => {
+        navigate("/Editar", { state: { name } });
     }
 
-    return(
+    const handleDeleteSuccess = (success: boolean) => {
+        if (success) {
+            setAlertOpen(true);
+            setTimeout(() => {
+                window.location.reload(); // Recarrega a página após fechar o alerta
+            }, 1500);
+        }
+    }
+
+    return (
         <S.DivTable>
-            <TableContainer sx={{maxWidth: "90vw", borderRadius:"3px"}}>
-            <TableHead >
-                <TableRow 
-                sx={{ 
-                    backgroundColor: "#2F333F",  
-                }}>
-                    <TableCell sx={{color: "white", textAlign: "left"}}>Título</TableCell>
-                    <TableCell sx={{color: "white", textAlign: "left"}}>Descrição</TableCell>
-                    <TableCell sx={{color: "white", textAlign: "center"}}>Completo</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                </TableRow>
-            </TableHead>
-
-            <TableBody>
-                {data.map((lista) => (
+            <TableContainer sx={{ maxWidth: "90vw", borderRadius: "3px" }}>
+                <TableHead >
                     <TableRow
-                        key={lista._id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <TableCell 
-                        sx={{ 
-                            color: "white",
-                            width:"10vw",
-                            maxWidth: "10vw",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            textAlign: "left",
-                        }}
-                        >
-                            {lista.name}
-                        </TableCell>
-
-                        <TableCell 
-                        sx={{ 
-                            color: "white",
-                            width:"20vw",
-                            maxWidth: "20vw",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            textAlign: "left",
-                        }}
-                        >
-                            {lista.description}
-                        </TableCell>
-
-                        <TableCell sx={{color: "white", textAlign: "center"}}>{lista.completed ? `Sim` : `Não`}</TableCell>
-
-                        <TableCell>
-
-                        <Button 
-                        sx=
-                        {{ 
-                            boxShadow: "1px 1px 1px #156AEB", 
-                            color: "white", 
-                            border: "solid 1px #156AEB"
-                        }} 
-                        size="small" 
-                        fullWidth 
-                        variant='outlined'
-                        onClick={() => HandleEdit(lista.name)}
-                        >
-                            Editar
-                        </Button>
-                        </TableCell>
-
-                        <TableCell>
-
-                        <Button sx={{boxShadow: "1px 1px 1px #E00000", color: "white", border: "solid 1px #E00000"}} size="small" fullWidth variant='outlined'
-                        >
-                            Excluir
-                        </Button>
-                        </TableCell>
+                        sx={{
+                            backgroundColor: "#2F333F",
+                        }}>
+                        <TableCell sx={{ color: "white", textAlign: "left" }}>Título</TableCell>
+                        <TableCell sx={{ color: "white", textAlign: "left" }}>Descrição</TableCell>
+                        <TableCell sx={{ color: "white", textAlign: "center" }}>Completo</TableCell>
+                        <TableCell></TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
-                ))}
+                </TableHead>
+
+                <TableBody>
+                    {data.map((lista) => (
+                        <TableRow
+                            key={lista._id}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell
+                                sx={{
+                                    color: "white",
+                                    width: "10vw",
+                                    maxWidth: "10vw",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    textAlign: "left",
+                                }}
+                            >
+                                {lista.name}
+                            </TableCell>
+
+                            <TableCell
+                                sx={{
+                                    color: "white",
+                                    width: "20vw",
+                                    maxWidth: "20vw",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    textAlign: "left",
+                                }}
+                            >
+                                {lista.description}
+                            </TableCell>
+
+                            <TableCell sx={{ color: "white", textAlign: "center" }}>{lista.completed ? `Sim` : `Não`}</TableCell>
+
+                            <TableCell>
+
+                                <Button
+                                    sx=
+                                    {{
+                                        boxShadow: "1px 1px 1px #156AEB",
+                                        color: "white",
+                                        border: "solid 1px #156AEB"
+                                    }}
+                                    size="small"
+                                    fullWidth
+                                    variant='outlined'
+                                    onClick={() => HandleEdit(lista.name)}
+                                >
+                                    Editar
+                                </Button>
+                            </TableCell>
+
+                            <TableCell>
+
+                                <ButtonExcluir name={lista.name} deletado={handleDeleteSuccess} />
+                            </TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
 
             </TableContainer>
-    
+            {alertOpen && <Alert severity='success'> Deletado com sucesso</Alert>}
         </S.DivTable>
-        
+
     )
 }
 

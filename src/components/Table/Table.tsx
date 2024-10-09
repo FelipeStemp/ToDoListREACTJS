@@ -2,7 +2,7 @@ import { Alert, Button, TableBody, TableCell, TableContainer, TableHead, TableRo
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiModel } from "../../Interface/Model";
-import ButtonContainer from "../button/ButtonCont";
+import ButtonExcluir from "../button/buttonExcluir/Excluir";
 import * as S from './styled';
 
 interface dataProps {
@@ -13,12 +13,8 @@ function TableList({ data }: dataProps) {
     const navigate = useNavigate();
     const [alertOpen, setAlertOpen] = useState(false);
 
-    const HandleEdit = (id: string) => {
-        navigate("/Editar", { state: { id } });
-    }
-
-    const HandleCriar =() => {
-        navigate("/Editar")
+    const HandleEdit = (name: string) => {
+        navigate("/Editar", { state: { name } });
     }
 
     const handleDeleteSuccess = (success: boolean) => {
@@ -41,7 +37,8 @@ function TableList({ data }: dataProps) {
                         <TableCell sx={{ color: "white", textAlign: "left" }}>Título</TableCell>
                         <TableCell sx={{ color: "white", textAlign: "left" }}>Descrição</TableCell>
                         <TableCell sx={{ color: "white", textAlign: "center" }}>Completo</TableCell>
-                        <TableCell sx={{textAlign: "center"}}><Button onClick={HandleCriar}>Criar</Button></TableCell>
+                        <TableCell></TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                 </TableHead>
 

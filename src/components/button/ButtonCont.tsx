@@ -10,12 +10,13 @@ interface props {
   colorS?: 'primary' | 'error' | 'success';
   variant?: 'contained' | 'outlined';
   desabilitar?: boolean,
+  click?: () => void;
 }
-function ButtonContainer({ id = '', action = '', children = '', data, colorS, variant }: props) {
+function ButtonContainer({ id = '', action = '', children = '', data, colorS, variant, desabilitar, click }: props) {
   const navigate = useNavigate();
 
   const HandleEdit = (id: string) => {
-    navigate("/Editar", { state: { id } });
+    navigate("/Editar", { state: { id, desabilitar: false } });
   }
 
   const handleCriar = (dataCriar: ApiModel) => {
@@ -116,9 +117,11 @@ function ButtonContainer({ id = '', action = '', children = '', data, colorS, va
     <Button sx={{ margin: "10px" }}
       size="small"
       variant={variant}
-      onClick={() => handleAction(action)}
+      onClickCapture={() => handleAction(action)}
       color={colorS}
       fullWidth
+      disabled={desabilitar}
+      onClick={click}
     >
       {children}
     </Button>

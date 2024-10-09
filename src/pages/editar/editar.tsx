@@ -7,13 +7,11 @@ import * as S from './styled';
 function Editar() {
 
   const location = useLocation();
-  const { id } = location.state;
+  const { id, desabilitar } = location.state;
 
   const [data, setData] = useState<ApiModel | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
-
-  console.log("id passado", id)
   useEffect(() => {
 
     if (id) {
@@ -47,8 +45,9 @@ function Editar() {
             _id: data._id,
             name: data.name,
             description: data.description,
-            completed: data.completed,
+            completed: data.completed,            
           }}
+          ativo={desabilitar}
         />
       )}
 

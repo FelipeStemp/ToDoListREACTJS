@@ -14,7 +14,7 @@ function TableList({ data }: dataProps) {
     const navigate = useNavigate();
 
     const handleCriar = () => {
-        navigate("/Criar")
+        navigate("/Criar", {state: {ativo: true}});
     }
 
     return (
@@ -28,7 +28,7 @@ function TableList({ data }: dataProps) {
                         <TableCell sx={{ color: "white", textAlign: "left" }}>Título</TableCell>
                         <TableCell sx={{ color: "white", textAlign: "left" }}>Descrição</TableCell>
                         <TableCell sx={{ color: "white", textAlign: "center" }}>Completo</TableCell>
-                        <TableCell sx={{ display: "flex", justifyContent: "center" }}><AddIcon sx={{ color: "white" }} fontSize="medium" onClick={handleCriar} /></TableCell>
+                        <TableCell sx={{ display: "flex", justifyContent: "center" }}><AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleCriar} /></TableCell>
                     </TableRow>
                 </TableHead>
 
@@ -69,8 +69,7 @@ function TableList({ data }: dataProps) {
                             <TableCell sx={{ color: "white", textAlign: "center" }}>{lista.completed ? `Sim` : `Não`}</TableCell>
 
                             <TableCell sx={{ display: "flex" }}>
-                                <ButtonContainer id={lista._id} colorS="primary" variant="contained" action="editOpen" children="Editar" />
-                                <ButtonContainer id={lista._id} colorS="error" variant="contained" action="delete" children="Excluir" />
+                                <ButtonContainer id={lista._id} colorS="primary" variant="contained" action="editOpen" children="Abrir" />
                             </TableCell>
                         </TableRow>
                     ))}

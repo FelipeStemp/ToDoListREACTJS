@@ -2,16 +2,17 @@
 import { Alert, Switch, TextField } from '@mui/material';
 import { ApiModel } from '../../Interface/Model';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ButtonContainer from '../button/ButtonCont';
 import * as S from './styled';
 
 interface dataProps {
   data: ApiModel;
+  ativo?: boolean | false;
 }
 
-function CardList({ data }: dataProps) {
+function CardList({ data, ativo }: dataProps) {
 
   const navigate = useNavigate();
   const [isComplete, setCompleto] = useState(data.completed);
@@ -19,20 +20,13 @@ function CardList({ data }: dataProps) {
   const [desc, setDesc] = useState(data.description);
   const [alertUpdate, setAlertUpdateOpen] = useState(false);
   const [alertDelete, setAlertDeleteOpen] = useState(false);
+  const [alertCreate, setAlertCreateOpen] = useState(false);
 
-  console.log("is aqui:", data._id)
-
-  const handleToggle = () => {
-    setCompleto(!isComplete)
-  }
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNome(event.target.value);
-  };
-
-  const handleDescChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDesc(event.target.value);
-  };
+  useEffect(() => {
+    setCompleto(data.completed);
+    setNome(data.name);
+    setDesc(data.description);
+  }, [data.completed, data.name, data.description]);
 
   const handleDeleteSuccess = (value: boolean) => {
     if (value) {
@@ -44,12 +38,20 @@ function CardList({ data }: dataProps) {
 
     }
   }
-
   const handleUpdateSuccess = (value: boolean) => {
     if (value) {
-      setAlertDeleteOpen(value);
+      setAlertUpdateOpen(value);
       setTimeout(() => {
-        setAlertDeleteOpen(false);
+        setAlertUpdateOpen(false);
+        navigate("/")
+      }, 2000);
+    }
+  }
+  const handleCreateSuccess = (value: boolean) => {
+    if (value) {
+      setAlertCreateOpen(value);
+      setTimeout(() => {
+        setAlertCreateOpen(false);
         navigate("/")
       }, 2000);
     }
@@ -58,11 +60,9 @@ function CardList({ data }: dataProps) {
 
   return (
     <S.DivCard>
-
-
       <TextField
         label="Título"
-        onChange={handleNameChange}
+        onChange={(e) => setNome(e.target.value)}
         variant='standard'
         value={nome}
 
@@ -84,34 +84,36 @@ function CardList({ data }: dataProps) {
         value={desc}
         margin='dense'
         variant='standard'
-        onChange={handleDescChange}
-
+        onChange={(e) => setDesc(e.target.value)}
         InputProps={{
-          sx: { color: 'white', margin: "2vw 0px" }, // Muda a cor do texto
+          sx: { color: 'white', margin: "2vw 0px" },
         }}
-
         InputLabelProps={{
-          sx: { color: 'white' }, // Muda a cor do rótulo
+          sx: { color: 'white' },
         }}
       />
 
       <label>Completo</label>
-      <Switch checked={isComplete} onChange={handleToggle} />
+      <Switch checked={isComplete} onChange={() => setCompleto(!isComplete)} />
 
-      {alertUpdate && <Alert severity='success'> Atualizado com sucesso</Alert>}
-      {alertDelete && <Alert severity='success'> Deletado com sucesso</Alert>}
-      <S.DivBtn>
-        <div style={{ display: "flex", width: "10vw" }}>
-          <ButtonContainer variant='contained' data={{ _id: "", name: nome, description: desc, completed: isComplete }} action='criar' children='Criar' colorS='success' />
-        </div>
+      {alertUpdate && <Alert severity='success'> Tarefa atualizada com sucesso</Alert>}
+      {alertDelete && <Alert severity='success'> Tarefa deletada com sucesso</Alert>}
+      {alertCreate && <Alert severity='success'> Tarefa criada com sucesso</Alert>}
+      <S.DivBtn>       
+          <ButtonContainer variant='contained' 
+            data={{ _id: "", name: nome, description: desc, completed: isComplete }} 
+            action='criar' children='Criar' desabilitar={!ativo} colorS='success' click={() => handleCreateSuccess(true)}
+          />
 
-        <div onClick={() => handleUpdateSuccess(true)} style={{ display: "flex", width: "10vw" }}>
-          <ButtonContainer id={data._id} variant='contained' data={{ _id: data._id, name: nome, description: desc, completed: isComplete }} action="Edit" children="Editar" />
-        </div>
+          <ButtonContainer id={data._id} variant='contained'
+            data={{ _id: data._id, name: nome, description: desc, completed: isComplete }}
+            action="Edit" children="Editar" desabilitar={ativo} click={() => handleUpdateSuccess(true)} 
+          />
 
-        <div onClick={() => handleDeleteSuccess(true)} style={{ display: "flex", width: "10vw" }}>
-          <ButtonContainer id={data._id} variant='contained' action='delete' children='Excluir' colorS='error' />
-        </div>
+          <ButtonContainer id={data._id} variant='contained' 
+            action='delete' children='Excluir' colorS='error' 
+            desabilitar={ativo} click={() => handleDeleteSuccess(true)} 
+          />
       </S.DivBtn>
     </S.DivCard>
   )

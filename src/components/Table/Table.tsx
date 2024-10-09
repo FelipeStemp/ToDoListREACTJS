@@ -1,15 +1,27 @@
 import AddIcon from '@mui/icons-material/Add';
-import { TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { ApiModel } from "../../Interface/Model";
 import ButtonContainer from "../button/ButtonCont";
 import * as S from './styled';
+import { useState } from 'react';
 
 interface dataProps {
     data: ApiModel[];
 }
 
 function TableList({ data }: dataProps) {
+    const [page, setPage] = useState(0)
+    const [rowsPerPage, setRows] = useState(5)
+
+    const hangleChangePage = (event: React.MouseEvent<HTMLButtonElement>, newPage: number) =>{
+        setPage(newPage);
+    }
+
+    const handleChangeRows = (event: React.MouseEvent<HTMLButtonElement>) =>{
+        setRows(parseInt(event.target, 10));
+        setPage(0)
+    }
 
     const navigate = useNavigate();
 
@@ -76,6 +88,16 @@ function TableList({ data }: dataProps) {
                 </TableBody>
 
             </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[2, data.length]} // Opções de linhas por página
+                component="div"
+                count={data.length} // Total de linhas
+                rowsPerPage={rowsPerPage} // Número de linhas por página atual
+                page={page} // Página atual
+                onPageChange={hangleChangePage} // Função para mudar a página
+                onRowsPerPageChange={handleChangeRows} // Função para mudar o número de linhas por página
+            />
+            
         </S.DivTable>
 
     )

@@ -22,6 +22,11 @@ export const DivBtn = styled.div`
 display: flex;
 width: 100%;
 justify-content: center;
+align-items: center;
 margin: 10px 0px;
-gap: 10px;
+gap: 5vw;
+@media (max-width: 720px) {
+  width: 100%;
+  gap: 10%;
+}
 `

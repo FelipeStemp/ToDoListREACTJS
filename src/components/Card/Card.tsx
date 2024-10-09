@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Alert, Button, Switch, TextField } from '@mui/material';
+import { Alert, Switch, TextField } from '@mui/material';
 import { ApiModel } from '../../Interface/Model';
 
 import { useState } from 'react';
@@ -7,17 +7,20 @@ import { useNavigate } from 'react-router-dom';
 import ButtonContainer from '../button/ButtonCont';
 import * as S from './styled';
 
+interface dataProps {
+  data: ApiModel;
+}
 
-function CardList({ _id, name, description, completed }: ApiModel) {
+function CardList({ data }: dataProps) {
 
   const navigate = useNavigate();
-  const [isComplete, setCompleto] = useState(completed);
-  const [nome, setNome] = useState(name);
-  const [desc, setDesc] = useState(description);
+  const [isComplete, setCompleto] = useState(data.completed);
+  const [nome, setNome] = useState(data.name);
+  const [desc, setDesc] = useState(data.description);
   const [alertUpdate, setAlertUpdateOpen] = useState(false);
   const [alertDelete, setAlertDeleteOpen] = useState(false);
 
-  console.log("is aqui:", _id)
+  console.log("is aqui:", data._id)
 
   const handleToggle = () => {
     setCompleto(!isComplete)
@@ -31,40 +34,27 @@ function CardList({ _id, name, description, completed }: ApiModel) {
     setDesc(event.target.value);
   };
 
-  const handleDeleteSuccess = (success: boolean) => {
-    if (success) {
-      setAlertDeleteOpen(true);
+  const handleDeleteSuccess = (value: boolean) => {
+    if (value) {
+      setAlertDeleteOpen(value);
+      setTimeout(() => {
+        setAlertDeleteOpen(false);
+        navigate("/")
+      }, 2000);
+
     }
   }
 
-  const handleSave = () => {
-    fetch(`https://api-to-do-list-lu3m.onrender.com/updateByID/${_id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          completed: isComplete,
-          name: nome,
-          description: desc,
-        })
-      }
-    ).then((response) => {
-      if (!response.ok) {
-        throw new Error("Erro ao atualizar")
-      }
-    }).then(data => {
-      console.log('att bem sucedida', data)
-
-      setAlertUpdateOpen(true);
+  const handleUpdateSuccess = (value: boolean) => {
+    if (value) {
+      setAlertDeleteOpen(value);
       setTimeout(() => {
+        setAlertDeleteOpen(false);
         navigate("/")
-      }, 2000)
-    }).catch(error => {
-      console.log('Error: ', error)
-    })
+      }, 2000);
+    }
   }
+
 
   return (
     <S.DivCard>
@@ -111,12 +101,18 @@ function CardList({ _id, name, description, completed }: ApiModel) {
       {alertUpdate && <Alert severity='success'> Atualizado com sucesso</Alert>}
       {alertDelete && <Alert severity='success'> Deletado com sucesso</Alert>}
       <S.DivBtn>
-        <Button variant='contained' onClick={handleSave}>SALVAR</Button>
-        <ButtonContainer id={_id} action='delete'/>
+        <div style={{ display: "flex", width: "10vw" }}>
+          <ButtonContainer variant='contained' data={{ _id: "", name: nome, description: desc, completed: isComplete }} action='criar' children='Criar' colorS='success' />
+        </div>
+
+        <div onClick={() => handleUpdateSuccess(true)} style={{ display: "flex", width: "10vw" }}>
+          <ButtonContainer id={data._id} variant='contained' data={{ _id: data._id, name: nome, description: desc, completed: isComplete }} action="Edit" children="Editar" />
+        </div>
+
+        <div onClick={() => handleDeleteSuccess(true)} style={{ display: "flex", width: "10vw" }}>
+          <ButtonContainer id={data._id} variant='contained' action='delete' children='Excluir' colorS='error' />
+        </div>
       </S.DivBtn>
-
-
-
     </S.DivCard>
   )
 }

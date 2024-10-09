@@ -1,8 +1,8 @@
-import { Alert, Button, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
+import { TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 import { ApiModel } from "../../Interface/Model";
-import ButtonExcluir from "../button/buttonExcluir/Excluir";
+import ButtonContainer from "../button/ButtonCont";
 import * as S from './styled';
 
 interface dataProps {
@@ -10,20 +10,11 @@ interface dataProps {
 }
 
 function TableList({ data }: dataProps) {
+
     const navigate = useNavigate();
-    const [alertOpen, setAlertOpen] = useState(false);
 
-    const HandleEdit = (name: string) => {
-        navigate("/Editar", { state: { name } });
-    }
-
-    const handleDeleteSuccess = (success: boolean) => {
-        if (success) {
-            setAlertOpen(true);
-            setTimeout(() => {
-                window.location.reload(); // Recarrega a página após fechar o alerta
-            }, 1500);
-        }
+    const handleCriar = () => {
+        navigate("/Criar")
     }
 
     return (
@@ -37,8 +28,7 @@ function TableList({ data }: dataProps) {
                         <TableCell sx={{ color: "white", textAlign: "left" }}>Título</TableCell>
                         <TableCell sx={{ color: "white", textAlign: "left" }}>Descrição</TableCell>
                         <TableCell sx={{ color: "white", textAlign: "center" }}>Completo</TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
+                        <TableCell sx={{ display: "flex", justifyContent: "center" }}><AddIcon sx={{ color: "white" }} fontSize="medium" onClick={handleCriar} /></TableCell>
                     </TableRow>
                 </TableHead>
 
@@ -78,34 +68,15 @@ function TableList({ data }: dataProps) {
 
                             <TableCell sx={{ color: "white", textAlign: "center" }}>{lista.completed ? `Sim` : `Não`}</TableCell>
 
-                            <TableCell>
-
-                                <Button
-                                    sx=
-                                    {{
-                                        boxShadow: "1px 1px 1px #156AEB",
-                                        color: "white",
-                                        border: "solid 1px #156AEB",
-                                        margin:"10px"
-                                    }}
-                                    size="small"
-                                    
-                                    variant='outlined'
-                                    onClick={() => HandleEdit(lista._id)}
-                                >
-                                    Editar
-                                </Button>
-
-                                <ButtonContainer id_coleted={lista._id}/>
-
-                                <ButtonContainer id_coleted={lista._id} />
+                            <TableCell sx={{ display: "flex" }}>
+                                <ButtonContainer id={lista._id} colorS="primary" variant="contained" action="editOpen" children="Editar" />
+                                <ButtonContainer id={lista._id} colorS="error" variant="contained" action="delete" children="Excluir" />
                             </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
 
             </TableContainer>
-            {alertOpen && <Alert severity='success'> Deletado com sucesso</Alert>}
         </S.DivTable>
 
     )

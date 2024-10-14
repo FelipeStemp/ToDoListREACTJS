@@ -18,9 +18,9 @@ function CardList({ data, ativo }: dataProps) {
   const [isComplete, setCompleto] = useState(data.completed);
   const [nome, setNome] = useState(data.name);
   const [desc, setDesc] = useState(data.description);
-  const [alertUpdate, setAlertUpdateOpen] = useState(false);
-  const [alertDelete, setAlertDeleteOpen] = useState(false);
-  const [alertCreate, setAlertCreateOpen] = useState(false);
+  const [alertError, setError] = useState(false);
+  const [alertSucess, setSucess] = useState(false);
+  const [alertaText, setAlertaTxt] = useState("")
 
   useEffect(() => {
     setCompleto(data.completed);
@@ -28,34 +28,21 @@ function CardList({ data, ativo }: dataProps) {
     setDesc(data.description);
   }, [data.completed, data.name, data.description]);
 
-  const handleDeleteSuccess = (value: boolean) => {
-    if (value) {
-      setAlertDeleteOpen(value);
-      setTimeout(() => {
-        setAlertDeleteOpen(false);
-        navigate("/")
-      }, 2000);
+  const handleSuccess = (message: string) => {
+    setSucess(true);
+    setAlertaTxt(message)
+    setTimeout(() => {
+      navigate("/")
+    }, 1300);
+  };
 
-    }
-  }
-  const handleUpdateSuccess = (value: boolean) => {
-    if (value) {
-      setAlertUpdateOpen(value);
-      setTimeout(() => {
-        setAlertUpdateOpen(false);
-        navigate("/")
-      }, 2000);
-    }
-  }
-  const handleCreateSuccess = (value: boolean) => {
-    if (value) {
-      setAlertCreateOpen(value);
-      setTimeout(() => {
-        setAlertCreateOpen(false);
-        navigate("/")
-      }, 2000);
-    }
-  }
+  const handleError = (message: string) => {
+    setError(true);
+    setAlertaTxt(message)
+    setTimeout(() => {
+      setError(false)
+    }, 1000);
+  };
 
 
   return (
@@ -73,6 +60,7 @@ function CardList({ data, ativo }: dataProps) {
         InputLabelProps={{
           sx: { color: 'white' }, // Muda a cor do rótulo
         }}
+        required
       />
 
       <TextField
@@ -91,30 +79,38 @@ function CardList({ data, ativo }: dataProps) {
         InputLabelProps={{
           sx: { color: 'white' },
         }}
+        required
       />
 
       <label>Completo</label>
-      <Switch checked={isComplete} onChange={() => setCompleto(!isComplete)} />
+      <Switch disabled={ativo} checked={isComplete} onChange={() => setCompleto(!isComplete)} />
 
-      {alertUpdate && <Alert severity='success'> Tarefa atualizada com sucesso</Alert>}
-      {alertDelete && <Alert severity='success'> Tarefa deletada com sucesso</Alert>}
-      {alertCreate && <Alert severity='success'> Tarefa criada com sucesso</Alert>}
-      <S.DivBtn>       
-          <ButtonContainer variant='contained' 
-            data={{ _id: "", name: nome, description: desc, completed: isComplete }} 
-            action='criar' children='Criar' desabilitar={!ativo} colorS='success' click={() => handleCreateSuccess(true)}
-          />
+      <S.DivBtn>
+        <ButtonContainer variant='contained'
+          data={{ _id: "", name: nome, description: desc, completed: isComplete }}
+          action='criar' children='Criar' desabilitar={!ativo} colorS='success'
+          onSuccess={() => handleSuccess("Criado com sucesso")}
+          onError={() => handleError("Erro ao criar, insira todos os dados obrigatorios")}
+        />
 
-          <ButtonContainer id={data._id} variant='contained'
-            data={{ _id: data._id, name: nome, description: desc, completed: isComplete }}
-            action="Edit" children="Editar" desabilitar={ativo} click={() => handleUpdateSuccess(true)} 
-          />
+        <ButtonContainer id={data._id} variant='contained'
+          data={{ _id: data._id, name: nome, description: desc, completed: isComplete }}
+          action="Edit" children="Salvar" desabilitar={ativo}
+          onSuccess={() => handleSuccess("Atualizado com sucesso")}
+          onError={() => handleError("Erro ao atualizar, insira todos os dados obrigatorios")}
+        />
 
-          <ButtonContainer id={data._id} variant='contained' 
-            action='delete' children='Excluir' colorS='error' 
-            desabilitar={ativo} click={() => handleDeleteSuccess(true)} 
-          />
+        <ButtonContainer id={data._id} variant='contained'
+          action='delete' children='Excluir' colorS='error'
+          desabilitar={ativo}
+          onSuccess={() => handleSuccess("Deletado com sucesso")}
+          onError={() => handleError("Erro ao deletar")}
+        />
+
       </S.DivBtn>
+
+      {alertSucess && <Alert severity='success'> {alertaText}</Alert>}
+      {alertError && <Alert severity='error'> {alertaText}</Alert>}
     </S.DivCard>
   )
 }

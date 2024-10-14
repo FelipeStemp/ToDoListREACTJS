@@ -10,9 +10,10 @@ interface props {
   colorS?: 'primary' | 'error' | 'success';
   variant?: 'contained' | 'outlined';
   desabilitar?: boolean,
-  click?: () => void;
+  onSuccess?: (message: string) => void;
+  onError?: (message: string) => void;
 }
-function ButtonContainer({ id = '', action = '', children = '', data, colorS, variant, desabilitar, click }: props) {
+function ButtonContainer({ id = '', action = '', children = '', data, colorS, variant, desabilitar, onError, onSuccess }: props) {
   const navigate = useNavigate();
 
   const HandleEdit = (id: string) => {
@@ -20,52 +21,68 @@ function ButtonContainer({ id = '', action = '', children = '', data, colorS, va
   }
 
   const handleCriar = (dataCriar: ApiModel) => {
-    console.log("dasdsads", dataCriar)
-    fetch("https://api-to-do-list-lu3m.onrender.com/createitem", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: dataCriar.name,
-        description: dataCriar.description,
-      }),
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error("Erro ao Criar")
-      }
-      return response.json();
-    }).then(data => {
-      console.log('Criação bem-sucedida', data);
-    }).catch(error => {
-      console.log('Error: ', error);
-    });
+
+    if (!dataCriar.description?.trim() || !dataCriar.name?.trim()) {
+      if (onError) onError('Insira os dados')
+      return;
+
+    } else {
+      fetch("https://api-to-do-list-lu3m.onrender.com/createitem", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: dataCriar.name,
+          description: dataCriar.description,
+        }),
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao Criar")
+        }
+        return response.json();
+      }).then(data => {
+        if (onSuccess) onSuccess('');
+      }).catch(error => {
+        console.log('Error: ', error);
+        if (onError) onError('');
+      });
+    }
   }
 
   const handleAtualizar = (dataAtt: ApiModel) => {
-    fetch(`https://api-to-do-list-lu3m.onrender.com/updateByID/${dataAtt._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        completed: dataAtt.completed,
-        name: dataAtt.name,
-        description: dataAtt.description,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro ao atualizar");
-        }
-        return response.json();
+
+    if (!dataAtt.description?.trim() || !dataAtt.name?.trim()) {
+      if (onError) onError('')
+      return;
+
+    } else {
+      fetch(`https://api-to-do-list-lu3m.onrender.com/updateByID/${dataAtt._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          completed: dataAtt.completed,
+          name: dataAtt.name,
+          description: dataAtt.description,
+        }),
       })
-      .then(data => {
-        console.log('Atualização bem-sucedida', data);
-      })
-      .catch(error => {
-        console.log('Error: ', error);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Erro ao atualizar");
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Atualização bem-sucedida', data);
+          if (onSuccess) onSuccess('');
+        })
+        .catch(error => {
+          console.log('Error: ', error);
+          if (onError) onError('');
+        });
+    }
   };
 
   const handleDeleter = (id_coleted: string) => {
@@ -81,10 +98,14 @@ function ButtonContainer({ id = '', action = '', children = '', data, colorS, va
       if (!response.ok) {
         throw new Error("Erro ao deletar")
       }
-      return response.json()
-    }).catch(error => {
-      console.log('Error:', error)
+      if (onSuccess) onSuccess('');
+
+      return response.status;
     })
+      .catch(error => {
+        console.log('Error:', error)
+        if (onError) onError('');
+      })
   }
 
   const handleAction = (action: string) => {
@@ -94,7 +115,6 @@ function ButtonContainer({ id = '', action = '', children = '', data, colorS, va
         break;
       case "criar":
         if (data) {
-          console.log(data)
           handleCriar(data);
         } else {
           console.error("Data is undefined, cannot update.");
@@ -117,11 +137,10 @@ function ButtonContainer({ id = '', action = '', children = '', data, colorS, va
     <Button sx={{ margin: "10px" }}
       size="small"
       variant={variant}
-      onClickCapture={() => handleAction(action)}
       color={colorS}
       fullWidth
       disabled={desabilitar}
-      onClick={click}
+      onClick={() => handleAction(action)}
     >
       {children}
     </Button>

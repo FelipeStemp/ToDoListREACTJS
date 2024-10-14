@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
+import { Chip, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { ApiModel } from "../../Interface/Model";
 import ButtonContainer from "../button/ButtonCont";
@@ -21,7 +21,7 @@ function TableList({ data }: dataProps) {
     const handleCloseModal = () => setIsModalOpen(false);
     const handleOpenModalCriar = () => setIsModalOpenCriar(true);
     const handleCloseModalCriar = () => setIsModalOpenCriar(false);
-    
+
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -87,7 +87,14 @@ function TableList({ data }: dataProps) {
                                     {lista.description}
                                 </TableCell>
 
-                                <TableCell sx={{ color: "white", textAlign: "center" }}>{lista.completed ? `Sim` : `Não`}</TableCell>
+                                <TableCell sx={{ color: "white", textAlign: "center" }}>
+                                    <Chip
+                                        label={lista.completed ? 'Concluído' : 'Pendente'}
+                                        sx={{ color: "white", backgroundColor: lista.completed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(175, 3, 0, 0.3)', border:lista.completed ? ' 2px solid #00FF00' : '2px solid #AF0300'}}
+                                        variant={lista.completed ? 'outlined' : 'filled'}
+                                        size="small"
+                                    />
+                                </TableCell>
 
                                 <TableCell sx={{ display: "flex" }}>
                                     <ButtonContainer id={lista._id} colorS="primary" variant="contained" click={handleOpenModal} children="Abrir" />

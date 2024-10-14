@@ -5,6 +5,7 @@ import { ApiModel } from "../../Interface/Model";
 import ButtonContainer from "../button/ButtonCont";
 import * as S from './styled';
 import { useState } from 'react';
+import CardList from '../Card/Card';
 
 interface dataProps {
     data: ApiModel[];
@@ -13,6 +14,14 @@ interface dataProps {
 function TableList({ data }: dataProps) {
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpenCriar, setIsModalOpenCriar] = useState(false);
+
+    const handleOpenModal = () => setIsModalOpen(true);
+    const handleCloseModal = () => setIsModalOpen(false);
+    const handleOpenModalCriar = () => setIsModalOpenCriar(true);
+    const handleCloseModalCriar = () => setIsModalOpenCriar(false);
+    
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -23,10 +32,6 @@ function TableList({ data }: dataProps) {
     };
     const currentRows = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
     const navigate = useNavigate();
-
-    const handleCriar = () => {
-        navigate("/Criar", { state: { ativo: true } });
-    }
     return (
         <S.DivTable>
             <TableContainer sx={{ maxWidth: "90vw", borderRadius: "3px" }}>
@@ -39,9 +44,15 @@ function TableList({ data }: dataProps) {
                             <TableCell sx={{ color: "white", textAlign: "left" }}>Título</TableCell>
                             <TableCell sx={{ color: "white", textAlign: "left" }}>Descrição</TableCell>
                             <TableCell sx={{ color: "white", textAlign: "center" }}>Completo</TableCell>
-                            <TableCell sx={{ display: "flex", justifyContent: "center" }}><AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleCriar} /></TableCell>
+                            <TableCell sx={{ display: "flex", justifyContent: "center" }}><AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} /></TableCell>
                         </TableRow>
                     </TableHead>
+
+                    <CardList
+                        ativo={true}
+                        open={isModalOpenCriar}
+                        handleClose={handleCloseModalCriar}
+                    />
 
                     <TableBody>
                         {currentRows.map((lista) => (
@@ -79,14 +90,20 @@ function TableList({ data }: dataProps) {
                                 <TableCell sx={{ color: "white", textAlign: "center" }}>{lista.completed ? `Sim` : `Não`}</TableCell>
 
                                 <TableCell sx={{ display: "flex" }}>
-                                    <ButtonContainer id={lista._id} colorS="primary" variant="contained" action="editOpen" children="Abrir" />
+                                    <ButtonContainer id={lista._id} colorS="primary" variant="contained" click={handleOpenModal} children="Abrir" />
+                                    <CardList
+                                        id={lista._id}
+                                        ativo={false}
+                                        open={isModalOpen}
+                                        handleClose={handleCloseModal}
+                                    />
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
 
                 </Table>
-                <TablePagination sx={{color: "White"}}
+                <TablePagination sx={{ color: "White" }}
                     rowsPerPageOptions={[3, 5, 7]}
                     component="div"
                     count={data.length}

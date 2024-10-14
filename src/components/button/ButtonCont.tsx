@@ -12,13 +12,9 @@ interface props {
   desabilitar?: boolean,
   onSuccess?: (message: string) => void;
   onError?: (message: string) => void;
+  click?: () => void;
 }
-function ButtonContainer({ id = '', action = '', children = '', data, colorS, variant, desabilitar, onError, onSuccess }: props) {
-  const navigate = useNavigate();
-
-  const HandleEdit = (id: string) => {
-    navigate("/Editar", { state: { id, desabilitar: false } });
-  }
+function ButtonContainer({ id = '', action = '', children = '', data, colorS, variant, desabilitar, onError, onSuccess, click }: props) {
 
   const handleCriar = (dataCriar: ApiModel) => {
 
@@ -120,9 +116,6 @@ function ButtonContainer({ id = '', action = '', children = '', data, colorS, va
           console.error("Data is undefined, cannot update.");
         }
         break;
-      case "editOpen":
-        HandleEdit(id);
-        break;
       case "Edit":
         if (data) {
           handleAtualizar(data);
@@ -141,6 +134,7 @@ function ButtonContainer({ id = '', action = '', children = '', data, colorS, va
       fullWidth
       disabled={desabilitar}
       onClick={() => handleAction(action)}
+      onClickCapture={click}
     >
       {children}
     </Button>

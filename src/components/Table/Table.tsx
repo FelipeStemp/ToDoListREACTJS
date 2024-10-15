@@ -16,9 +16,16 @@ function TableList({ data }: dataProps) {
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenCriar, setIsModalOpenCriar] = useState(false);
+    const [idSelected, setIdSelected] = useState<string | null>();
 
-    const handleOpenModal = () => setIsModalOpen(true);
-    const handleCloseModal = () => setIsModalOpen(false);
+    const handleOpenModal = (id: string) => {
+        setIdSelected(id)
+        setIsModalOpen(true)
+    };
+    const handleCloseModal = () => {
+        setIdSelected(null)
+        setIsModalOpen(false);
+    }
     const handleOpenModalCriar = () => setIsModalOpenCriar(true);
     const handleCloseModalCriar = () => setIsModalOpenCriar(false);
 
@@ -90,20 +97,14 @@ function TableList({ data }: dataProps) {
                                 <TableCell sx={{ color: "white", textAlign: "center" }}>
                                     <Chip
                                         label={lista.completed ? 'Concluído' : 'Pendente'}
-                                        sx={{ color: "white", backgroundColor: lista.completed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(175, 3, 0, 0.3)', border:lista.completed ? ' 2px solid #00FF00' : '2px solid #AF0300'}}
+                                        sx={{ color: "white", backgroundColor: lista.completed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(175, 3, 0, 0.3)', border: lista.completed ? ' 2px solid #00FF00' : '2px solid #AF0300' }}
                                         variant={lista.completed ? 'outlined' : 'filled'}
                                         size="small"
                                     />
                                 </TableCell>
 
                                 <TableCell sx={{ display: "flex" }}>
-                                    <ButtonContainer id={lista._id} colorS="primary" variant="contained" click={handleOpenModal} children="Abrir" />
-                                    <CardList
-                                        id={lista._id}
-                                        ativo={false}
-                                        open={isModalOpen}
-                                        handleClose={handleCloseModal}
-                                    />
+                                    <ButtonContainer id={lista._id} colorS="primary" variant="contained" click={() => handleOpenModal(lista._id || "")} children="Abrir" />
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -120,6 +121,15 @@ function TableList({ data }: dataProps) {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </TableContainer>
+
+            {idSelected &&
+                <CardList
+                    id={idSelected}
+                    ativo={false}
+                    open={isModalOpen}
+                    handleClose={handleCloseModal}
+                />
+            }
         </S.DivTable>
     )
 }

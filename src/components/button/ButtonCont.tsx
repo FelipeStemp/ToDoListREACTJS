@@ -12,7 +12,7 @@ interface props {
   desabilitar?: boolean,
   onSuccess?: (message: string) => void;
   onError?: (message: string) => void;
-  click?: () => void;
+  click?: () => void ;
 }
 function ButtonContainer({ id = '', action = '', children = '', data, colorS, variant, desabilitar, onError, onSuccess, click }: props) {
 
@@ -133,8 +133,8 @@ function ButtonContainer({ id = '', action = '', children = '', data, colorS, va
       color={colorS}
       fullWidth
       disabled={desabilitar}
-      onClick={() => handleAction(action)}
-      onClickCapture={click}
+      onClick={click}
+      onClickCapture={() => handleAction(action)}
     >
       {children}
     </Button>

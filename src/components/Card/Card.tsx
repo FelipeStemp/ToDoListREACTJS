@@ -3,7 +3,6 @@ import { Alert, Modal, Switch, TextField } from '@mui/material';
 import { ApiModel } from '../../Interface/Model';
 
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ButtonContainer from '../button/ButtonCont';
 import * as S from './styled';
 
@@ -15,8 +14,6 @@ interface dataProps {
 }
 
 function CardList({ id, ativo, open, handleClose }: dataProps) {
-
-  const navigate = useNavigate();
   const [data, setData] = useState<ApiModel>({});
   const [alertError, setError] = useState(false);
   const [alertSucess, setSucess] = useState(false);
@@ -50,7 +47,6 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
   };
 
   useEffect(() => {
-
     if (id) {
       fetch(`https://api-to-do-list-lu3m.onrender.com/id/${id}`, {
         method: 'GET',
@@ -83,11 +79,11 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
           value={nome}
 
           InputProps={{
-            sx: { color: 'white', margin: "2vw 0px", textAlign: "center" }, // Muda a cor do texto
+            sx: { color: 'white', margin: "2vw 0px", textAlign: "center" }, 
           }}
 
           InputLabelProps={{
-            sx: { color: 'white' }, // Muda a cor do rótulo
+            sx: { color: 'white' }, 
           }}
           required
         />

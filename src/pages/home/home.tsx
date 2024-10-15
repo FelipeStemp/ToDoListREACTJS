@@ -3,6 +3,8 @@ import { ApiModel } from '../../Interface/Model';
 import TableList from '../../components/Table/Table';
 import * as S from './styled';
 import { Box, CircularProgress, Modal } from '@mui/material';
+import CardTarefa from '../../components/CardTarefa/CardTarefa';
+import { Key } from '@mui/icons-material';
 
 function Home() {
   const [data, setData] = useState<ApiModel[]>([]);
@@ -40,7 +42,16 @@ function Home() {
   }
   return (
     <S.HomeBody>
-      <TableList data={data}></TableList>
+      {/* <TableList data={data}></TableList>  */}
+      {data.map((tarefas) => (
+        <CardTarefa 
+          name={tarefas.name} 
+          _id={tarefas._id} 
+          description={tarefas.description}
+          completed={tarefas.completed}
+        />
+      ))}
+      
     </S.HomeBody>
 
   )

@@ -8,15 +8,20 @@ function CardTarefa({ name, description, _id, completed }: ApiModel) {
         <S.BodyCard>
             <Chip
                 label={completed ? 'Concluído' : 'Pendente'}
-                sx={{ color: "white", backgroundColor: completed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(175, 3, 0, 0.3)', border: completed ? ' 2px solid #00FF00' : '2px solid #AF0300' }}
+                sx={{ 
+                    color: "white", backgroundColor: completed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(175, 3, 0, 0.3)', 
+                    border: completed ? ' 2px solid #00FF00' : '2px solid #AF0300',
+                    position: 'absolute', right: 10
+                }}
                 variant={completed ? 'outlined' : 'filled'}
                 size="small"
             />
             <S.HeaderCard>
-                <h5>{name}</h5>
+                <h3>{name}</h3>
+                <hr></hr>
             </S.HeaderCard>
-
-            <S.DescBody>
+            
+            <S.DescBody>                
                 <a>{description}</a>
             </S.DescBody>
         </S.BodyCard>

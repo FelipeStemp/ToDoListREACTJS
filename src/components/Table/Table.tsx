@@ -1,5 +1,5 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Chip, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
+import { Chip, CircularProgress, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { ApiModel } from "../../Interface/Model";
 import ButtonContainer from "../button/ButtonCont";
@@ -38,7 +38,6 @@ function TableList({ data }: dataProps) {
         setPage(0);
     };
     const currentRows = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-    const navigate = useNavigate();
     return (
         <S.DivTable>
             <TableContainer sx={{ maxWidth: "90vw", borderRadius: "3px" }}>

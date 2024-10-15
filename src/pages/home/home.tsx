@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { ApiModel } from '../../Interface/Model';
 import TableList from '../../components/Table/Table';
 import * as S from './styled';
+import { Box, CircularProgress, Modal } from '@mui/material';
 
 function Home() {
   const [data, setData] = useState<ApiModel[]>([]);
   const [error, setError] = useState<Error | null>(null);
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
+    setLoading(true)
     fetch('https://api-to-do-list-lu3m.onrender.com/', {
       method: 'GET',
       mode: 'cors',
@@ -20,16 +23,21 @@ function Home() {
       })
       .then((data) => {
         setData(data);
-        console.log(data);
+        setLoading(false)
       })
       .catch((error) => {
         setError(error);
         console.log(error);
       });
   }, []);
-  console.log(data);
 
-
+  if (loading) {
+    return (
+      <Box style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#2F333F' }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
   return (
     <S.HomeBody>
       <TableList data={data}></TableList>

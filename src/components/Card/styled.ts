@@ -30,3 +30,9 @@ gap: 5vw;
   gap: 10%;
 }
 `
+
+export const HeaderDiv = styled.div`
+display: flex;
+width: 100%;
+justify-content: end;
+`

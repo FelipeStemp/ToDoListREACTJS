@@ -70,7 +70,7 @@ function TableList({ data }: dataProps) {
                                     sx={{
                                         color: "white",
                                         width: "10vw",
-                                        maxWidth: "10vw",
+                                        maxWidth: "30vw",
                                         whiteSpace: "nowrap",
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
@@ -83,7 +83,7 @@ function TableList({ data }: dataProps) {
                                     sx={{
                                         color: "white",
                                         width: "20vw",
-                                        maxWidth: "20vw",
+                                        maxWidth: "40vw",
                                         whiteSpace: "nowrap",
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
@@ -110,7 +110,7 @@ function TableList({ data }: dataProps) {
                     </TableBody>
 
                 </Table>
-                <TablePagination sx={{ color: "White" }}
+                <TablePagination sx={{ color: "White", display: 'flex', justifyContent: 'start', marginX: 0}}
                     rowsPerPageOptions={[3, 5, 7]}
                     component="div"
                     count={data.length}

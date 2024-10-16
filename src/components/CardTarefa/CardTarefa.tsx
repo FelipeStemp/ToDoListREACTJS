@@ -49,7 +49,7 @@ function CardTarefa({ name, description, _id, completed, fetchData }: CardTarefa
                     ativo={false}
                     open={isModalOpen}
                     handleClose={handleCloseModal}  
-                    fetchData={() => fetchData()}                  
+                    fetchData={fetchData}                  
                 />
             }
         </CardActionArea>

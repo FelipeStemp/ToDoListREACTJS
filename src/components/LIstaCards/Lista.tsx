@@ -31,7 +31,7 @@ function ListaTarefas({ data, fetchData }: conteudo) {
             <S.Separacao />
 
             <S.ConteudosBody>
-                <S.Titulo>Em Porgresso</S.Titulo>
+                <S.Titulo>Fazendo</S.Titulo>
                 <S.CardsDiv>
                     {filterComplete.map((tarefas) => (
                         <CardTarefa
@@ -53,6 +53,7 @@ function ListaTarefas({ data, fetchData }: conteudo) {
                 <S.CardsDiv>
                     {filterComplete.map((tarefas) => (
                         <CardTarefa
+                            key={tarefas._id}
                             name={tarefas.name}
                             _id={tarefas._id}
                             description={tarefas.description}

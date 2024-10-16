@@ -53,9 +53,9 @@ function CardList({ id, ativo, open, handleClose, fetchData }: dataProps) {
     }, 1300);
   };
   
-  const handleCloseWithoutUpdate = () => {
-    resetData();
+  const handleModalClose = () => {
     handleClose();
+    resetData();
   };
 
   const handleError = (message: string) => {
@@ -99,7 +99,7 @@ function CardList({ id, ativo, open, handleClose, fetchData }: dataProps) {
       <Modal open={open} style={{ width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <S.DivCard>
           <S.HeaderDiv>
-            <button style={{ backgroundColor: 'transparent', border: 'none', color: 'white' }} onClick={handleCloseWithoutUpdate}>
+            <button style={{ backgroundColor: 'transparent', border: 'none', color: 'white' }} onClick={handleModalClose}>
               <CloseIcon fontSize='large' />
             </button>
           </S.HeaderDiv>

@@ -3,14 +3,13 @@ import CardTarefa from '../../components/CardTarefa/CardTarefa';
 import { ApiModel } from '../../Interface/Model';
 
 interface conteudo {
-    data: ApiModel[]
+    data: ApiModel[];
+    fetchData: () => void;
 }
 
-function ListaTarefas({data} : conteudo) {
-
-    
-  const filterPendente = data.filter((item) => item.completed == false)
-  const filterComplete = data.filter((item) => item.completed == true)
+function ListaTarefas({ data, fetchData }: conteudo) {
+    const filterPendente = data.filter((item) => item.completed == false)
+    const filterComplete = data.filter((item) => item.completed == true)
     return (
         <S.ListaBody>
             <S.ConteudosBody>
@@ -18,10 +17,12 @@ function ListaTarefas({data} : conteudo) {
                 <S.CardsDiv>
                     {filterPendente.map((tarefas) => (
                         <CardTarefa
+                            key={tarefas._id}
                             name={tarefas.name}
                             _id={tarefas._id}
                             description={tarefas.description}
                             completed={tarefas.completed}
+                            fetchData={() => fetchData()}
                         />
                     ))}
                 </S.CardsDiv>
@@ -34,10 +35,12 @@ function ListaTarefas({data} : conteudo) {
                 <S.CardsDiv>
                     {filterComplete.map((tarefas) => (
                         <CardTarefa
+                            key={tarefas._id}
                             name={tarefas.name}
                             _id={tarefas._id}
                             description={tarefas.description}
                             completed={tarefas.completed}
+                            fetchData={() => fetchData()}
                         />
                     ))}
                 </S.CardsDiv>
@@ -54,6 +57,7 @@ function ListaTarefas({data} : conteudo) {
                             _id={tarefas._id}
                             description={tarefas.description}
                             completed={tarefas.completed}
+                            fetchData={() => fetchData()}
                         />
                     ))}
                 </S.CardsDiv>

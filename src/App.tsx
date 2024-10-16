@@ -1,8 +1,6 @@
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import './App.css';/* 
-import Criar from './pages/Criacao/criar';
-import Editar from './pages/editar/editar'; */
+import './App.css';
 import Home from './pages/home/home';
 
 ;
@@ -12,9 +10,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home />} />{/* 
-        <Route path='/Editar' element={<Editar />} />
-        <Route path='/Criar' element={<Criar />} /> */}
+        <Route path='/' element={<Home />} />
       </Routes>
     </Router>
   );

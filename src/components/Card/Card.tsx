@@ -12,9 +12,10 @@ interface dataProps {
   ativo?: boolean | false;
   open: boolean,
   handleClose: () => void;
+  fetchData: () => void;
 }
 
-function CardList({ id, ativo, open, handleClose }: dataProps) {
+function CardList({ id, ativo, open, handleClose, fetchData }: dataProps) {
   const [data, setData] = useState<ApiModel>({});
   const [alertError, setError] = useState(false);
   const [alertSucess, setSucess] = useState(false);
@@ -33,13 +34,28 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
     setLoading(false)
   }, [data.completed, data.name, data.description]);
 
+  const resetData = () => {
+    setData({} as ApiModel);
+    setNome("");
+    setDesc("");
+    setCompleto(false);
+    setError(false);
+    setSucess(false);
+    setAlertaTxt("");
+  };
+
   const handleSuccess = (message: string) => {
     setSucess(true);
     setAlertaTxt(message)
     setTimeout(() => {
-      handleClose();
-      window.location.reload()
+      resetData();
+      fetchData();
     }, 1300);
+  };
+  
+  const handleCloseWithoutUpdate = () => {
+    resetData();
+    handleClose();
   };
 
   const handleError = (message: string) => {
@@ -83,7 +99,7 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
       <Modal open={open} style={{ width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <S.DivCard>
           <S.HeaderDiv>
-            <button style={{backgroundColor: 'transparent', border: 'none', color: 'white'}} onClick={handleClose}>
+            <button style={{ backgroundColor: 'transparent', border: 'none', color: 'white' }} onClick={handleCloseWithoutUpdate}>
               <CloseIcon fontSize='large' />
             </button>
           </S.HeaderDiv>
@@ -100,7 +116,6 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
             InputLabelProps={{
               sx: { color: 'white' },
             }}
-            required
           />
 
           <TextField
@@ -119,7 +134,6 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
             InputLabelProps={{
               sx: { color: 'white' },
             }}
-            required
           />
 
           <label>Completo</label>
@@ -148,7 +162,6 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
             />
 
           </S.DivBtn>
-
           {alertSucess && <Alert severity='success'> {alertaText}</Alert>}
           {alertError && <Alert severity='error'> {alertaText}</Alert>}
         </S.DivCard>

@@ -1,11 +1,14 @@
-import { Card, CardActionArea, CardContent, Chip, TextField, Typography } from '@mui/material'
+import { CardActionArea, Chip, } from '@mui/material'
 import * as S from './styled'
 import { ApiModel } from '../../Interface/Model'
 import { useState } from 'react';
 import CardList from '../Card/Card';
 
+interface CardTarefaProps extends ApiModel {
+    fetchData: () => void;
+  }
 
-function CardTarefa({ name, description, _id, completed }: ApiModel) {
+function CardTarefa({ name, description, _id, completed, fetchData }: CardTarefaProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idSelected, setIdSelected] = useState<string | null>();
 
@@ -16,7 +19,7 @@ function CardTarefa({ name, description, _id, completed }: ApiModel) {
     const handleCloseModal = () => {
         setIdSelected(null)
         setIsModalOpen(false);
-    }
+    };
 
     return (
 
@@ -45,7 +48,8 @@ function CardTarefa({ name, description, _id, completed }: ApiModel) {
                     id={idSelected}
                     ativo={false}
                     open={isModalOpen}
-                    handleClose={handleCloseModal}
+                    handleClose={handleCloseModal}  
+                    fetchData={() => fetchData()}                  
                 />
             }
         </CardActionArea>

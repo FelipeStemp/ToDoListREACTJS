@@ -1,17 +1,16 @@
-import AddIcon from '@mui/icons-material/Add';
-import { Chip, CircularProgress, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import { Chip, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
 import { ApiModel } from "../../Interface/Model";
 import ButtonContainer from "../button/ButtonCont";
 import * as S from './styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CardList from '../Card/Card';
 
 interface dataProps {
     data: ApiModel[];
+    fetchData: () => void;
 }
 
-function TableList({ data }: dataProps) {
+function TableList({ data, fetchData }: dataProps) {
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,10 +21,9 @@ function TableList({ data }: dataProps) {
         setIsModalOpen(true)
     };
     const handleCloseModal = () => {
-        setIdSelected(null)
+        setIdSelected(null);
         setIsModalOpen(false);
     }
-
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -34,6 +32,7 @@ function TableList({ data }: dataProps) {
         setPage(0);
     };
     const currentRows = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
     return (
         <S.DivTable>
             <TableContainer sx={{ maxWidth: "90vw", borderRadius: "3px" }}>
@@ -121,7 +120,8 @@ function TableList({ data }: dataProps) {
                     id={idSelected}
                     ativo={false}
                     open={isModalOpen}
-                    handleClose={handleCloseModal}
+                    handleClose={handleCloseModal}  
+                    fetchData={() => fetchData()}
                 />
             }
         </S.DivTable>

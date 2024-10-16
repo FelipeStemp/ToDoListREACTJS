@@ -2,14 +2,29 @@ import { useEffect, useState } from 'react';
 import { ApiModel } from '../../Interface/Model';
 import TableList from '../../components/Table/Table';
 import * as S from './styled';
-import { Box, CircularProgress, Modal } from '@mui/material';
-import CardTarefa from '../../components/CardTarefa/CardTarefa';
-import { Key } from '@mui/icons-material';
+import { Box, ButtonGroup, CircularProgress, Modal } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import CardList from '../../components/Card/Card';
+import ListaTarefas from '../../components/LIstaCards/Lista';
+import TableRowsIcon from '@mui/icons-material/TableRows';
+import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 
 function Home() {
   const [data, setData] = useState<ApiModel[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState<boolean>(true)
+  const [isModalOpenCriar, setIsModalOpenCriar] = useState(false);
+  const [showComponent, setShowComponente] = useState(() =>{
+    const valueSelected = localStorage.getItem('showComponent');
+    return valueSelected === 'true'
+  })
+  const handleOpenModalCriar = () => setIsModalOpenCriar(true);
+  const handleCloseModalCriar = () => setIsModalOpenCriar(false);
+  const toggleComponent = (mostrar: boolean) => setShowComponente(mostrar);
+
+  useEffect(() => {
+    localStorage.setItem('showComponent', showComponent.toString());
+  }, [showComponent])
 
   useEffect(() => {
     setLoading(true)
@@ -42,16 +57,28 @@ function Home() {
   }
   return (
     <S.HomeBody>
-      {/* <TableList data={data}></TableList>  */}
-      {data.map((tarefas) => (
-        <CardTarefa 
-          name={tarefas.name} 
-          _id={tarefas._id} 
-          description={tarefas.description}
-          completed={tarefas.completed}
+
+      <S.HomeHeader>
+
+        <AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} />
+
+        <ButtonGroup variant="contained" aria-label="Basic button group" sx={{ gap: '10px', display:'flex', alignItems: 'center', padding:'5px' }}>
+          <TableRowsIcon sx={{ color: "white" }} fontSize="large" onClick={() => toggleComponent(false)}/>
+          <ViewColumnIcon sx={{ color: "white" }} fontSize="large" onClick={() => toggleComponent(true)}/>
+        </ButtonGroup>
+
+        <CardList
+          ativo={true}
+          open={isModalOpenCriar}
+          handleClose={handleCloseModalCriar}
         />
-      ))}
-      
+      </S.HomeHeader>
+
+        {showComponent ? <ListaTarefas data={data} /> : <TableList data={data}></TableList>}
+        {/* <TableList data={data}></TableList> */}
+
+
+
     </S.HomeBody>
 
   )

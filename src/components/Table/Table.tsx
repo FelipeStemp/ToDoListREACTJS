@@ -15,7 +15,6 @@ function TableList({ data }: dataProps) {
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isModalOpenCriar, setIsModalOpenCriar] = useState(false);
     const [idSelected, setIdSelected] = useState<string | null>();
 
     const handleOpenModal = (id: string) => {
@@ -26,9 +25,6 @@ function TableList({ data }: dataProps) {
         setIdSelected(null)
         setIsModalOpen(false);
     }
-    const handleOpenModalCriar = () => setIsModalOpenCriar(true);
-    const handleCloseModalCriar = () => setIsModalOpenCriar(false);
-
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -47,18 +43,12 @@ function TableList({ data }: dataProps) {
                             sx={{
                                 backgroundColor: "#2F333F",
                             }}>
-                            <TableCell sx={{ color: "white", textAlign: "left" }}>Título</TableCell>
-                            <TableCell sx={{ color: "white", textAlign: "left" }}>Descrição</TableCell>
-                            <TableCell sx={{ color: "white", textAlign: "center" }}>Completo</TableCell>
-                            <TableCell sx={{ display: "flex", justifyContent: "center" }}><AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} /></TableCell>
+                            <TableCell sx={{ color: "white", textAlign: "left", height: '31px' }}>Título</TableCell>
+                            <TableCell sx={{ color: "white", textAlign: "left", height: '31px' }}>Descrição</TableCell>
+                            <TableCell sx={{ color: "white", textAlign: "center", height: '31px' }}>Completo</TableCell>
+                            <TableCell sx={{ display: "flex", justifyContent: "center", height: '31px' }}></TableCell>
                         </TableRow>
                     </TableHead>
-
-                    <CardList
-                        ativo={true}
-                        open={isModalOpenCriar}
-                        handleClose={handleCloseModalCriar}
-                    />
 
                     <TableBody>
                         {currentRows.map((lista) => (
@@ -69,8 +59,8 @@ function TableList({ data }: dataProps) {
                                 <TableCell
                                     sx={{
                                         color: "white",
-                                        width: "10vw",
-                                        maxWidth: "30vw",
+                                        width: "15vw",
+                                        maxWidth: "15vw",
                                         whiteSpace: "nowrap",
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
@@ -83,7 +73,7 @@ function TableList({ data }: dataProps) {
                                     sx={{
                                         color: "white",
                                         width: "20vw",
-                                        maxWidth: "40vw",
+                                        maxWidth: "20vw",
                                         whiteSpace: "nowrap",
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
@@ -96,14 +86,19 @@ function TableList({ data }: dataProps) {
                                 <TableCell sx={{ color: "white", textAlign: "center" }}>
                                     <Chip
                                         label={lista.completed ? 'Concluído' : 'Pendente'}
-                                        sx={{ color: "white", backgroundColor: lista.completed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(175, 3, 0, 0.3)', border: lista.completed ? ' 2px solid #00FF00' : '2px solid #AF0300' }}
+                                        sx={{ color: "white", backgroundColor: lista.completed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(175, 3, 0, 0.3)', 
+                                                border: lista.completed ? ' 2px solid #00FF00' : '2px solid #AF0300' 
+                                            }}
                                         variant={lista.completed ? 'outlined' : 'filled'}
                                         size="small"
                                     />
                                 </TableCell>
 
                                 <TableCell sx={{ display: "flex" }}>
-                                    <ButtonContainer id={lista._id} colorS="primary" variant="contained" click={() => handleOpenModal(lista._id || "")} children="Abrir" />
+                                    <ButtonContainer id={lista._id} colorS="primary" variant="contained"
+                                        click={() => handleOpenModal(lista._id || "")} 
+                                        children="Abrir" 
+                                    />
                                 </TableCell>
                             </TableRow>
                         ))}

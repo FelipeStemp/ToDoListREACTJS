@@ -5,8 +5,10 @@ border-radius: 10px;
 max-height: 80vh;
 padding: 10px;
 overflow: auto;
-background-color: rgba(70, 76, 93, 0.4);
+background-color: #00000078;
 backdrop-filter: blur(1px);
-border: solid 1px #156AEB;
-box-shadow: 2px 2px 2px #156AEB;
+box-shadow: 5px 5px rgba(21, 106, 235, 0.2);
+border: solid 1px rgba(21, 106, 235, 0.5);
+border-radius: .5rem;
+width: 80vw;
 `

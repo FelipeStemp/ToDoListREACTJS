@@ -8,9 +8,9 @@ padding: 2vw;
 align-items: left;
 flex-direction: column;
 border-radius: 10px;
-background-color: #464C5D;
 border: solid 1px #156AEB;
 box-shadow: 2px 2px 2px #156AEB;
+backdrop-filter: blur(40px);  
 justify-content: flex-end;
 
 @media (max-width: 720px) {

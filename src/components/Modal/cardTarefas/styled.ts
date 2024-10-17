@@ -34,5 +34,6 @@ gap: 5vw;
 export const HeaderDiv = styled.div`
 display: flex;
 width: 100%;
-justify-content: end;
+justify-content: center;
+margin-bottom: 80px;
 `

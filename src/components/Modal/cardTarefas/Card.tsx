@@ -101,9 +101,8 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
       <Modal open={open} style={{ width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <S.DivCard>
           <S.HeaderDiv>
-            <button type='button' style={{ backgroundColor: 'transparent', border: 'none', color: 'white' }} onClick={handleCloseModal}>
-              <CloseIcon fontSize='large' />
-            </button>
+              <h1 style={{position: 'absolute', top: '5px'}}>Criar tarefa</h1>
+              <CloseIcon fontSize='large'onClick={handleCloseModal} sx={{position: 'absolute', top: '10px', right: '10px'}}/>
           </S.HeaderDiv>
           <TextField
             label="Título"

@@ -112,7 +112,10 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
             value={nome}
 
             InputProps={{
-              sx: { color: 'white', margin: "2vw 0px", textAlign: "center" },
+              sx: { color: 'white', margin: "2vw 0px", textAlign: "center", '& input:-webkit-autofill': {
+                                WebkitTextFillColor: 'white', // Cor do texto preenchido automaticamente
+                                transition: 'background-color 5000s ease-in-out 0s',
+                            }, },
             }}
 
             InputLabelProps={{
@@ -131,7 +134,10 @@ function CardList({ id, ativo, open, handleClose }: dataProps) {
             variant='standard'
             onChange={(e) => setDesc(e.target.value)}
             InputProps={{
-              sx: { color: 'white', margin: "2vw 0px" },
+              sx: { color: 'white', margin: "2vw 0px", '& input:-webkit-autofill': {
+                                WebkitTextFillColor: 'white', // Cor do texto preenchido automaticamente
+                                transition: 'background-color 5000s ease-in-out 0s',
+                            }, },
             }}
             InputLabelProps={{
               sx: { color: 'white' },

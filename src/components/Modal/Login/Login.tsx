@@ -12,7 +12,7 @@ function LoginModal({open, handleClose} : props) {
     return (
         <Modal open={open} style={{ width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <S.BodyLogin>
-                <CloseIcon fontSize='large' onClick={handleClose} />
+                <CloseIcon fontSize='large' onClick={handleClose} sx={{position: 'absolute', top: '10px', right: '10px'}} />
                 <S.FormLogin>
                     <TextField type='email' label="E-mail" focused InputProps={{
                         sx: {

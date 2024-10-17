@@ -13,13 +13,10 @@ function InicioPage() {
     return (
         <S.BodyLogin>
             <Header justify="center">
-                <h2>To-Do List</h2>
                 <ButtonGroup sx={{ width: '200px', position: 'absolute', right:'10px' }}>
                     <ButtonContainer click={() => handleOpen()} variant="contained">Login</ButtonContainer>
                     <ButtonContainer variant="outlined">Cadastro</ButtonContainer>
                 </ButtonGroup>
-
-
             </Header>
             <LoginModal open={openModalLogin} handleClose={handleClose}></LoginModal>
         </S.BodyLogin>

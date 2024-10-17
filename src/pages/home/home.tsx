@@ -68,10 +68,10 @@ function Home() {
     <S.HomeBody>
 
       <Header justify='center'>
-        <ButtonGroup variant="contained" aria-label="Basic button group" sx={{ gap: '10px', display: 'flex', alignItems: 'center', padding: '5px' }}>
-          <AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} />
-          <TableRowsIcon sx={{ color: "white" }} fontSize="large" onClick={() => toggleComponent(false)} />
-          <ViewColumnIcon sx={{ color: "white" }} fontSize="large" onClick={() => toggleComponent(true)} />
+        <ButtonGroup variant="contained" aria-label="Basic button group" sx={{  display: 'flex', alignItems: 'center', width:'200px', border: 'none', boxShadow:'none', position: 'absolute', right:'10px' }}>
+          <AddIcon sx={{ color: "white", width:'33%' }} fontSize="large" onClick={handleOpenModalCriar} />
+          <TableRowsIcon sx={{ color: "white", width:'33%' }} fontSize="large" onClick={() => toggleComponent(false)} />
+          <ViewColumnIcon sx={{ color: "white", width:'33%' }} fontSize="large" onClick={() => toggleComponent(true)} />
         </ButtonGroup>
 
         <CardList

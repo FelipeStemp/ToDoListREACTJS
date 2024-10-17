@@ -1,15 +1,18 @@
 import { colors, Modal, TextField } from '@mui/material'
 import * as S from './styled'
 import ButtonContainer from '../../button/ButtonCont'
+import CloseIcon from '@mui/icons-material/Close';
 
 interface props {
-    open: boolean
+    open: boolean,
+    handleClose: () => void,
 }
 
-function LoginModal({open} : props) {
+function LoginModal({open, handleClose} : props) {
     return (
         <Modal open={open} style={{ width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <S.BodyLogin>
+                <CloseIcon fontSize='large' onClick={handleClose} />
                 <S.FormLogin>
                     <TextField type='email' label="E-mail" focused InputProps={{
                         sx: {

@@ -9,6 +9,7 @@ import ListaTarefas from '../../components/LIstaCards/Lista';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import { fetchData } from '../../methods/fetch';
+import Header from '../../components/HeaderDiv/header';
 
 function Home() {
   const [data, setData] = useState<ApiModel[]>([]);
@@ -30,20 +31,20 @@ function Home() {
   }, [showComponent])
 
   useEffect(() => {
-      setLoading(true)
-      fetchData()
-        .then((data: ApiModel[]) =>
-          setData(data))
-        .catch((error: string) =>
-          console.log(error));
-      setFirst(false);
-      setLoading(false)
+    setLoading(true)
+    fetchData()
+      .then((data: ApiModel[]) =>
+        setData(data))
+      .catch((error: string) =>
+        console.log(error));
+    setFirst(false);
+    setLoading(false)
   })
 
   if (loading) {
     return (
       <S.HomeBody>
-        <S.HomeHeader>
+        <Header>
 
           <AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} />
 
@@ -57,7 +58,7 @@ function Home() {
             open={isModalOpenCriar}
             handleClose={handleCloseModalCriar}
           />
-        </S.HomeHeader>
+        </Header>
         <Box style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#2F333F' }}>
           <CircularProgress />
         </Box>
@@ -68,8 +69,7 @@ function Home() {
   return (
     <S.HomeBody>
 
-      <S.HomeHeader>
-
+      <Header>
         <AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} />
 
         <ButtonGroup variant="contained" aria-label="Basic button group" sx={{ gap: '10px', display: 'flex', alignItems: 'center', padding: '5px' }}>
@@ -82,7 +82,7 @@ function Home() {
           open={isModalOpenCriar}
           handleClose={handleCloseModalCriar}
         />
-      </S.HomeHeader>
+      </Header>
 
       {showComponent ? <ListaTarefas data={data} /> : <TableList data={data}></TableList>}
 

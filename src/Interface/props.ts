@@ -5,5 +5,8 @@ export interface PropsAll{
   backgroundColor?: string,
   radius?: string,
   type?: string,
-
+  display?: string,
+  justify?: string,
+  alignItens?: string,
+  padding?: string,
 }

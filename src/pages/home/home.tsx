@@ -8,6 +8,7 @@ import CardList from '../../components/Card/Card';
 import ListaTarefas from '../../components/LIstaCards/Lista';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
+import { fetchData } from '../../methods/fetch';
 
 function Home() {
   const [data, setData] = useState<ApiModel[]>([]);
@@ -28,35 +29,16 @@ function Home() {
     localStorage.setItem('showComponent', showComponent.toString());
   }, [showComponent])
 
-  const fetchData = () => {
-    setLoading(true)
-    fetch('https://api-to-do-list-lu3m.onrender.com/', {
-      method: 'GET',
-      mode: 'cors',
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Erro ao buscar atividades');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setData(data);
-        setLoading(false)
-      })
-      .catch((error) => {
-        setError(error);
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
-    if (firstAcess) {
       setLoading(true)
-      fetchData();
+      fetchData()
+        .then((data: ApiModel[]) =>
+          setData(data))
+        .catch((error: string) =>
+          console.log(error));
       setFirst(false);
-    }
-  }, [firstAcess])
+      setLoading(false)
+  })
 
   if (loading) {
     return (
@@ -74,7 +56,6 @@ function Home() {
             ativo={true}
             open={isModalOpenCriar}
             handleClose={handleCloseModalCriar}
-            fetchData={handleCloseModalCriar}
           />
         </S.HomeHeader>
         <Box style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#2F333F' }}>
@@ -100,11 +81,10 @@ function Home() {
           ativo={true}
           open={isModalOpenCriar}
           handleClose={handleCloseModalCriar}
-          fetchData={handleCloseModalCriar}
         />
       </S.HomeHeader>
 
-      {showComponent ? <ListaTarefas fetchData={() => fetchData()} data={data} /> : <TableList fetchData={() => fetchData()} data={data}></TableList>}
+      {showComponent ? <ListaTarefas data={data} /> : <TableList data={data}></TableList>}
 
     </S.HomeBody>
 

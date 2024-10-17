@@ -4,27 +4,15 @@ import { ApiModel } from '../../Interface/Model'
 import { useState } from 'react';
 import CardList from '../Card/Card';
 
-interface CardTarefaProps extends ApiModel {
-    fetchData: () => void;
-  }
+interface props extends ApiModel{
+    click: () => void;
+}
 
-function CardTarefa({ name, description, _id, completed, fetchData }: CardTarefaProps) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [idSelected, setIdSelected] = useState<string | null>();
-
-    const handleOpenModal = (id: string) => {
-        setIdSelected(id)
-        setIsModalOpen(true)
-    };
-    const handleCloseModal = () => {
-        setIdSelected(null)
-        setIsModalOpen(false);
-    };
-
+function CardTarefa({ name, description, _id, completed, click }: props) {
     return (
 
         <CardActionArea sx={{width: 'fit-content', height: 'fit-content'}}
-            onClick={() => handleOpenModal(_id || '')}
+            onClick={click}
         >
             <S.BodyCard>
                 <Chip
@@ -43,15 +31,7 @@ function CardTarefa({ name, description, _id, completed, fetchData }: CardTarefa
                 </S.HeaderCard>
             </S.BodyCard>
 
-            {idSelected &&
-                <CardList
-                    id={idSelected}
-                    ativo={false}
-                    open={isModalOpen}
-                    handleClose={handleCloseModal}  
-                    fetchData={fetchData}                  
-                />
-            }
+            
         </CardActionArea>
 
     )

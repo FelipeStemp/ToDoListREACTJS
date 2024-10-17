@@ -6,16 +6,16 @@ import { useEffect, useState } from 'react';
 import ButtonContainer from '../button/ButtonCont';
 import CloseIcon from '@mui/icons-material/Close';
 import * as S from './styled';
+import { fetchData } from '../../methods/fetch';
 
 interface dataProps {
   id?: string,
   ativo?: boolean | false;
   open: boolean,
   handleClose: () => void;
-  fetchData: () => void;
 }
 
-function CardList({ id, ativo, open, handleClose, fetchData }: dataProps) {
+function CardList({ id, ativo, open, handleClose }: dataProps) {
   const [data, setData] = useState<ApiModel>({});
   const [alertError, setError] = useState(false);
   const [alertSucess, setSucess] = useState(false);
@@ -49,14 +49,16 @@ function CardList({ id, ativo, open, handleClose, fetchData }: dataProps) {
     setAlertaTxt(message)
     setTimeout(() => {
       resetData();
+      handleClose();
       fetchData();
     }, 1300);
   };
-  
-  const handleModalClose = () => {
-    handleClose();
+
+  const handleCloseModal = () => {
     resetData();
-  };
+    handleClose();
+  }
+
 
   const handleError = (message: string) => {
     setError(true);
@@ -99,7 +101,7 @@ function CardList({ id, ativo, open, handleClose, fetchData }: dataProps) {
       <Modal open={open} style={{ width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <S.DivCard>
           <S.HeaderDiv>
-            <button style={{ backgroundColor: 'transparent', border: 'none', color: 'white' }} onClick={handleModalClose}>
+            <button type='button' style={{ backgroundColor: 'transparent', border: 'none', color: 'white' }} onClick={handleCloseModal}>
               <CloseIcon fontSize='large' />
             </button>
           </S.HeaderDiv>

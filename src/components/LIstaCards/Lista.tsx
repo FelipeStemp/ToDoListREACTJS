@@ -1,15 +1,28 @@
 import * as S from './styled';
 import CardTarefa from '../../components/CardTarefa/CardTarefa';
 import { ApiModel } from '../../Interface/Model';
+import { useState } from 'react';
+import CardList from '../Card/Card';
 
 interface conteudo {
     data: ApiModel[];
-    fetchData: () => void;
 }
 
-function ListaTarefas({ data, fetchData }: conteudo) {
+function ListaTarefas({ data }: conteudo) {
+    const [openModal, setOpenModal] = useState(false)
+    const [idSelected, setIdSelected] = useState<string | null>()
     const filterPendente = data.filter((item) => item.completed == false)
     const filterComplete = data.filter((item) => item.completed == true)
+
+    const handleOpenModal = (id: string) => {
+        setIdSelected(id)
+        setOpenModal(true)
+    };
+    const handleCloseModal = () => {
+        setIdSelected(null)
+        setOpenModal(false);
+    };
+
     return (
         <S.ListaBody>
             <S.ConteudosBody>
@@ -22,7 +35,7 @@ function ListaTarefas({ data, fetchData }: conteudo) {
                             _id={tarefas._id}
                             description={tarefas.description}
                             completed={tarefas.completed}
-                            fetchData={() => fetchData()}
+                            click={() => handleOpenModal(tarefas._id || "")}
                         />
                     ))}
                 </S.CardsDiv>
@@ -40,7 +53,7 @@ function ListaTarefas({ data, fetchData }: conteudo) {
                             _id={tarefas._id}
                             description={tarefas.description}
                             completed={tarefas.completed}
-                            fetchData={() => fetchData()}
+                            click={() => handleOpenModal(tarefas._id || "")}
                         />
                     ))}
                 </S.CardsDiv>
@@ -58,11 +71,20 @@ function ListaTarefas({ data, fetchData }: conteudo) {
                             _id={tarefas._id}
                             description={tarefas.description}
                             completed={tarefas.completed}
-                            fetchData={() => fetchData()}
+                            click={() => handleOpenModal(tarefas._id || "")}
                         />
                     ))}
                 </S.CardsDiv>
             </S.ConteudosBody>
+
+            {idSelected &&
+                <CardList
+                    id={idSelected}
+                    ativo={false}
+                    open={openModal}
+                    handleClose={handleCloseModal}          
+                />
+            }
         </S.ListaBody>
     )
 }

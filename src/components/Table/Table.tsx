@@ -7,10 +7,9 @@ import CardList from '../Card/Card';
 
 interface dataProps {
     data: ApiModel[];
-    fetchData: () => void;
 }
 
-function TableList({ data, fetchData }: dataProps) {
+function TableList({ data }: dataProps) {
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -120,8 +119,7 @@ function TableList({ data, fetchData }: dataProps) {
                     id={idSelected}
                     ativo={false}
                     open={isModalOpen}
-                    handleClose={handleCloseModal}  
-                    fetchData={() => fetchData()}
+                    handleClose={handleCloseModal}
                 />
             }
         </S.DivTable>

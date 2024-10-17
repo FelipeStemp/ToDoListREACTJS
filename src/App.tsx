@@ -2,7 +2,7 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './pages/home/home';
-import LoginPage from './pages/login/login';
+import InicioPage from './pages/Inicio/Inicio';
 
 ;
 
@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<LoginPage />} />
+        <Route path='/' element={<InicioPage />} />
         <Route path='/Tarefas' element={<Home/>}/>
       </Routes>
     </Router>

@@ -45,10 +45,8 @@ function Home() {
     return (
       <S.HomeBody>
         <Header>
-
-          <AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} />
-
           <ButtonGroup variant="contained" aria-label="Basic button group" sx={{ gap: '10px', display: 'flex', alignItems: 'center', padding: '5px' }}>
+            <AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} />
             <TableRowsIcon sx={{ color: "white" }} fontSize="large" onClick={() => toggleComponent(false)} />
             <ViewColumnIcon sx={{ color: "white" }} fontSize="large" onClick={() => toggleComponent(true)} />
           </ButtonGroup>
@@ -69,10 +67,9 @@ function Home() {
   return (
     <S.HomeBody>
 
-      <Header>
-        <AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} />
-
+      <Header justify='center'>
         <ButtonGroup variant="contained" aria-label="Basic button group" sx={{ gap: '10px', display: 'flex', alignItems: 'center', padding: '5px' }}>
+          <AddIcon sx={{ color: "white" }} fontSize="large" onClick={handleOpenModalCriar} />
           <TableRowsIcon sx={{ color: "white" }} fontSize="large" onClick={() => toggleComponent(false)} />
           <ViewColumnIcon sx={{ color: "white" }} fontSize="large" onClick={() => toggleComponent(true)} />
         </ButtonGroup>

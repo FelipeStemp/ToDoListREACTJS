@@ -1,13 +1,13 @@
 import { PropsAll } from '../../Interface/props';
 import *  as S  from './styled'
 
-interface props extends PropsAll {
+export interface props extends PropsAll {
     children?: React.ReactNode;
 }
 
-function Header({children} : props) {
+function Header({children, justify} : props) {
     return(
-        <S.HomeHeader>
+        <S.HomeHeader justify={justify}>
             {children}
         </S.HomeHeader>
     )

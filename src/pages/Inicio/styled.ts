@@ -7,4 +7,5 @@ background-color: #2F333F;
 display: flex;
 align-items: center;
 justify-content: center;
+color: white;
 `

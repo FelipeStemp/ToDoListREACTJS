@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { props } from "./header";
 
-export const HomeHeader = styled.div`
-width: 100vw;
+export const HomeHeader = styled.div<props>`
+width: 100%;
 height: 10vh;
 position: absolute;
 top: 0;
@@ -11,5 +12,9 @@ box-shadow: 0px 5px rgba(21, 106, 235, 0.1);
 display: flex;
 align-items: center;
 padding-x: 10px;
-justify-content: center;
+justify-content: ${(props) => props.justify || 'space-between'};
+@media(max-width: 720px){
+    justify-content: left;
+    padding-left: 20px;
+}
 `

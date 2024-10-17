@@ -5,17 +5,17 @@ import Header from "../../components/HeaderDiv/header";
 import ButtonContainer from "../../components/button/ButtonCont";
 import { ButtonGroup } from "@mui/material";
 
-function LoginPage() {
+function InicioPage() {
     const [openModalLogin, setOpenModalLogin] = useState(false)
 
     const handleOpen = () => { setOpenModalLogin(true) }
     const handleClose = () => { setOpenModalLogin(false) }
     return (
-        <S.BodyLogin >
-            <Header display="flex">
-                <a>Sistema de ToDo list</a>
-                <ButtonGroup sx={{ width: '200px' }}>
-                    <ButtonContainer variant="contained">Login</ButtonContainer>
+        <S.BodyLogin>
+            <Header justify="center">
+                <h2>To-Do List</h2>
+                <ButtonGroup sx={{ width: '200px', position: 'absolute', right:'10px' }}>
+                    <ButtonContainer click={() => handleOpen()} variant="contained">Login</ButtonContainer>
                     <ButtonContainer variant="outlined">Cadastro</ButtonContainer>
                 </ButtonGroup>
 
@@ -26,4 +26,4 @@ function LoginPage() {
     )
 }
 
-export default LoginPage
+export default InicioPage

@@ -4,7 +4,7 @@ import TableList from '../../components/Table/Table';
 import * as S from './styled';
 import { Box, ButtonGroup, CircularProgress } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import CardList from '../../components/Card/Card';
+import CardList from '../../components/Modal/cardTarefas/Card';
 import ListaTarefas from '../../components/LIstaCards/Lista';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';

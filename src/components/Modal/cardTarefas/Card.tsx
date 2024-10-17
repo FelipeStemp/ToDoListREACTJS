@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Alert, Box, CircularProgress, Modal, Switch, TextField } from '@mui/material';
-import { ApiModel } from '../../Interface/Model';
+import { ApiModel } from '../../../Interface/Model';
 
 import { useEffect, useState } from 'react';
-import ButtonContainer from '../button/ButtonCont';
+import ButtonContainer from '../../button/ButtonCont';
 import CloseIcon from '@mui/icons-material/Close';
 import * as S from './styled';
-import { fetchData } from '../../methods/fetch';
+import { fetchData } from '../../../methods/fetch';
 
 interface dataProps {
   id?: string,

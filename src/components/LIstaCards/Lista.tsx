@@ -2,7 +2,7 @@ import * as S from './styled';
 import CardTarefa from '../../components/CardTarefa/CardTarefa';
 import { ApiModel } from '../../Interface/Model';
 import { useState } from 'react';
-import CardList from '../Card/Card';
+import CardList from '../Modal/cardTarefas/Card';
 
 interface conteudo {
     data: ApiModel[];

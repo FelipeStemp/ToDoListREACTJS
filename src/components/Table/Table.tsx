@@ -3,7 +3,7 @@ import { ApiModel } from "../../Interface/Model";
 import ButtonContainer from "../button/ButtonCont";
 import * as S from './styled';
 import { useEffect, useState } from 'react';
-import CardList from '../Card/Card';
+import CardList from '../Modal/cardTarefas/Card';
 
 interface dataProps {
     data: ApiModel[];

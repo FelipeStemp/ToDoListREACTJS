@@ -2,7 +2,7 @@ import { CardActionArea, Chip, } from '@mui/material'
 import * as S from './styled'
 import { ApiModel } from '../../Interface/Model'
 import { useState } from 'react';
-import CardList from '../Card/Card';
+import CardList from '../Modal/cardTarefas/Card';
 
 interface props extends ApiModel{
     click: () => void;

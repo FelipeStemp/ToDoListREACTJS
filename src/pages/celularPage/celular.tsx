@@ -3,6 +3,7 @@ import CardTarefa from '../../components/CardTarefa/CardTarefa';
 import { ApiModel } from '../../Interface/Model';
 import * as S from './styled'
 import Filtros from '../../components/Filtrar/filtro';
+import CardList from '../../components/Modal/cardTarefas/Card';
 
 
 
@@ -39,6 +40,15 @@ function CelPage({ data }: conteudo) {
                     />
                 ))}
             </S.Cards>
+
+            {idSelected &&
+                <CardList
+                    id={idSelected}
+                    ativo={false}
+                    open={openModal}
+                    handleClose={handleCloseModal}          
+                />
+            }
         </S.BodyCel>
     )
 }

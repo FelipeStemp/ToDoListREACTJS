@@ -10,6 +10,7 @@ import TableRowsIcon from '@mui/icons-material/TableRows';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import { fetchData } from '../../methods/fetch';
 import Header from '../../components/HeaderDiv/header';
+import CelPage from '../celularPage/celular';
 
 function Home() {
   const [data, setData] = useState<ApiModel[]>([]);
@@ -21,6 +22,7 @@ function Home() {
     return valueSelected === 'true'
   })
   const [firstAcess, setFirst] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
 
   const handleOpenModalCriar = () => setIsModalOpenCriar(true);
   const handleCloseModalCriar = () => { setIsModalOpenCriar(false) }
@@ -40,6 +42,17 @@ function Home() {
     setFirst(false);
     setLoading(false)
   })
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize)
+  })
+
+  
 
   if (loading) {
     return (
@@ -68,10 +81,10 @@ function Home() {
     <S.HomeBody>
 
       <Header justify='center'>
-        <ButtonGroup variant="contained" aria-label="Basic button group" sx={{  display: 'flex', alignItems: 'center', width:'200px', border: 'none', boxShadow:'none', position: 'absolute', right:'10px' }}>
-          <AddIcon sx={{ color: "white", width:'33%' }} fontSize="large" onClick={handleOpenModalCriar} />
-          <TableRowsIcon sx={{ color: "white", width:'33%' }} fontSize="large" onClick={() => toggleComponent(false)} />
-          <ViewColumnIcon sx={{ color: "white", width:'33%' }} fontSize="large" onClick={() => toggleComponent(true)} />
+        <ButtonGroup className="buttonGroup" variant="contained" aria-label="Basic button group" sx={{  display: 'flex', alignItems: 'center', width:'200px', border: 'none', boxShadow:'none', position: 'absolute', right:'10px' }}>
+          <AddIcon sx={{ color: "white", width:'33%' }} fontSize="large" onClick={handleOpenModalCriar}/>
+          {!isMobile && <TableRowsIcon sx={{ color: "white", width:'33%' }} fontSize="large" onClick={() => toggleComponent(false)} />}
+          {!isMobile && <ViewColumnIcon sx={{ color: "white", width:'33%' }} fontSize="large" onClick={() => toggleComponent(true)} />}
         </ButtonGroup>
 
         <CardList
@@ -81,7 +94,9 @@ function Home() {
         />
       </Header>
 
-      {showComponent ? <ListaTarefas data={data} /> : <TableList data={data}></TableList>}
+      {!isMobile && (showComponent ? <ListaTarefas data={data} /> : <TableList data={data}></TableList>)} 
+
+      {isMobile && <CelPage data={data}/>} 
 
     </S.HomeBody>
 

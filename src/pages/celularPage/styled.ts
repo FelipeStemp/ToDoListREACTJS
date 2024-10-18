@@ -23,8 +23,3 @@ scrollbar-width: none;
 gap: 20px;
 `
 
-export const Filtros = styled.div`
-display: flex;
-justify-content: center;
-
-`

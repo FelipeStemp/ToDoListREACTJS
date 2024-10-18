@@ -7,7 +7,7 @@ height: 100vh;
 justify-content: center;
 align-items:center;
 background-color: #2F333F;
-
+color: white;
 .buttonGroup{
     @media(max-width: 768px){
         display: contents;
